@@ -1,0 +1,24 @@
+doctype html
+html
+  head
+    title QIRPD - #{params[:id]}
+    script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"
+    script src="/app.js"
+  body
+    javascript:
+      $(function(){
+        streamLogs('#{params[:id]}', $('table.logs tbody'));
+      });
+
+    p Since #{Time.now}
+
+    .metric.counter.throughput*data(value: 0)
+      label Total Requests
+      .data 0
+
+    .metric.average.response_time*data(value: 0,count: 0)
+      label Average Response Time
+      .data 0
+
+    table.logs
+      tbody

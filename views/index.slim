@@ -1,0 +1,11 @@
+doctype html
+html
+  head
+    title QIRPD - Live
+    script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"
+    script src="/app.js"
+  body  
+    ul
+      - @apps.each do |app|
+        li
+          a href="/app/#{app["name"]}" = app["name"]
