@@ -28,33 +28,39 @@ class App < Sinatra::Base
 
   get "/log/:id", provides: 'text/event-stream' do
     @heroku = Heroku::API.new(:api_key => request.env['bouncer.token']) 
-    url = @heroku.get_logs(params[:id], {'tail' => 1}).body
+    url = @heroku.get_logs(params[:id], {'tail' => 1, 'num' => 5000, 'ps' => 'router'}).body
 
     stream :keep_open do |out|
       # Keep connection open on cedar
       EventMachine::PeriodicTimer.new(15) { out << "\0" }
-      http = EventMachine::HttpRequest.new(url).get
+      http = EventMachine::HttpRequest.new(url, keepalive: true, connection_timeout: 0, inactivity_timeout: 0).get
 
-      out.callback { out.close }
-      out.errback { out.close }
+      out.callback do
+        puts "callback: closing"
+        out.close
+      end
+      out.errback do
+        puts "errback: closing"
+        out.close
+      end
 
       buffer = ""
       http.stream do |chunk|
+        puts "chunk received: #{chunk}"
         buffer << chunk
         while line = buffer.slice!(/.+\n/)
           matches = line.force_encoding('utf-8').match(/(\S+)\s(\w+)\[(\w|.+)\]\:\s(.*)/)
 
-          timestamp = matches[1]
+          timestamp = DateTime.parse(matches[1]).to_time
           ps = matches[3]
           data = Hash[ matches[4].split(" ").map{|j| j.split("=")} ]
 
-          parsed_line = {}
-          if ps == "router"
-            parsed_line = {
-              "throughput" => 1,
-              "response_time" => data["service"].to_i
-            }
-          end
+          parsed_line = {
+            "time" => timestamp,
+            "throughput" => 1,
+            "response_time" => data["service"].to_i,
+            "status" => data["status"].to_i
+          }
 
           out << "data: #{parsed_line.to_json}\n\n" unless parsed_line.empty?
         end
