@@ -10,6 +10,15 @@ class App < Sinatra::Base
     register Sinatra::Reloader
   end
 
+  configure do
+    Compass.add_project_configuration(File.join(File.dirname(__FILE__), 'config', 'compass.config'))
+  end
+
+  get '/stylesheets/:name.css' do
+    content_type 'text/css', :charset => 'utf-8'
+    scss(:"stylesheets/#{params[:name]}", Compass.sass_engine_options )
+  end
+
   helpers do
     def data(hash)
       hash.keys.each_with_object({}){ |key, data_hash| data_hash["data-#{key}"] = hash[key] }
