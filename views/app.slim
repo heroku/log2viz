@@ -22,7 +22,7 @@ html
             h3.score
               .data 0
         .col
-          .metric*data(display:"sum",type:"requests",label:"rpm")
+          .metric*data(display:"sum",type:"requests",label:" rpm")
             h2 Throughput
             h3.score
               .data 0
@@ -39,7 +39,7 @@ html
             h3.score
               ul.data
 
-      .utilization data-value="80"
+      .metric.utilization*data(display:"utilization",type:"response_time",label:"%")
         h2
           | Utilization
           span.learnmore

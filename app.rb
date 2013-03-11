@@ -72,7 +72,7 @@ class App < Sinatra::Base
             parsed_line = {
               "requests" => 1,
               "response_time" => data["service"].to_i,
-              "status" => data["status"].to_i
+              "status" => "#{data["status"][0]}xx"
             }
           elsif data.fetch("measure","").include?("web.memory_total")
             parsed_line = {
