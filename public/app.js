@@ -96,9 +96,17 @@ function utilization(items, elem) {
 }
 
 function median(items, elem) {
-  return "unimplemented"
+  var value = percentile_index(items, 50);
+  $(".data", elem).text(value + $(elem).data("label"))
 }
 
 function perc95(items, elem) {
-  return "unimplemented"
+  var value = percentile_index(items, 95);
+  $(".data", elem).text(value + $(elem).data("label"))
+}
+
+function percentile_index(items, percentile) {
+  percentile = percentile/100
+  items.sort(function(a,b) { return a - b })
+  return items[Math.ceil((Math.max(items.length - 1,0)) * percentile)]
 }
