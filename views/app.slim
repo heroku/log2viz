@@ -21,6 +21,14 @@ html
             h2 Average Response Time
             h3.score
               .data 0
+          .metric*data(display:"median",type:"response_time",label:"ms")
+            h2 Median Response Time
+            h3.score
+              .data 0
+          .metric*data(display:"perc95",type:"response_time",label:"ms")
+            h2 Median Response Time
+            h3.score
+              .data 0
         .col
           .metric*data(display:"sum",type:"requests",label:" rpm")
             h2 Throughput
@@ -38,7 +46,7 @@ html
             h2 Response Status
             ul.data.two-col-list
 
-      .metric.utilization*data(display:"utilization",type:"response_time",label:"%")
+      .metric.utilization*data(display:"utilization",type:"response_time",procs:@concurrency*@ps.count)
         h2
           | Utilization
           span.learnmore
@@ -47,6 +55,5 @@ html
               span.response-info Here we show a summary of your response statuses and error logs. Click for more.
         .util-max
           img alt="Optimal utilization is 40%" src="/optimal.png"
-          .util style="width:80%"
-            h3.score 80%
+          h3.util.score.data
         p.dynos #{@concurrency * @ps.count} web processes (#{@ps.count} dynos x #{@concurrency} per dyno)

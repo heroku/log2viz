@@ -35,7 +35,10 @@ class App < Sinatra::Base
     heroku = Heroku::API.new(:api_key => request.env['bouncer.token']) 
     @app = heroku.get_app(params[:id]).body
     @ps = heroku.get_ps(params[:id]).body.select{|x| x["process"].include?("web.")}
-    @concurrency = 3 # TODO: replace with config
+
+    config = heroku.get_config_vars(params[:id]).body
+    @concurrency = config["UNICORN_WORKERS"].to_i || config["WEB_CONCURRENCY"].to_i || 1
+
     slim :app
   end
 
@@ -74,6 +77,7 @@ class App < Sinatra::Base
               "response_time" => data["service"].to_i,
               "status" => "#{data["status"][0]}xx"
             }
+            parsed_line["error"] = data["code"] if data["at"] == "error"
           elsif data.fetch("measure","").include?("web.memory_total")
             parsed_line = {
               "memory_usage" => data["val"].to_i

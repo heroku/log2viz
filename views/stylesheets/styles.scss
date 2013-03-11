@@ -1,3 +1,5 @@
+@import "compass";
+
 /*
  * HTML5 Boilerplate
  *
@@ -188,9 +190,11 @@ textarea {
     }
 
    .util {
+    @include box-sizing(border-box);
     background: #37a800;
-    height:40px;
-    width:38%;
+    height: 40px;
+    padding-left: 6px;
+    width: 0%;
    }
 
    .util-max {
