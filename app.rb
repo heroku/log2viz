@@ -55,18 +55,17 @@ class App < Sinatra::Base
 
       buffer = ""
       http.stream do |chunk|
-        puts "chunk received: #{chunk}"
         buffer << chunk
         while line = buffer.slice!(/.+\n/)
           matches = line.force_encoding('utf-8').match(/(\S+)\s(\w+)\[(\w|.+)\]\:\s(.*)/)
 
-          timestamp = DateTime.parse(matches[1]).to_time
+          timestamp = DateTime.parse(matches[1]).to_time.to_i
           ps = matches[3]
           data = Hash[ matches[4].split(" ").map{|j| j.split("=")} ]
 
           parsed_line = {
-            "time" => timestamp,
-            "throughput" => 1,
+            "timestamp" => timestamp,
+            "requests" => 1,
             "response_time" => data["service"].to_i,
             "status" => data["status"].to_i
           }

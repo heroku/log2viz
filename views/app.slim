@@ -4,6 +4,7 @@ html
     title QIRPD - #{params[:id]}
     link rel="stylesheet" type="text/css" href="/stylesheets/styles.css"
     script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"
+    script src="/underscore.js"
     script src="/app.js"
   body
     javascript:
@@ -11,13 +12,13 @@ html
         streamLogs('#{params[:id]}', $('table.logs tbody'));
       });
 
-    p Since #{Time.now}
+    h3 Analog
 
-    .metric.counter.throughput*data(value: 0)
-      label Total Requests
+    .metric.requests*data(display:"counter",type:"requests")
+      label Throughput
       .data 0
 
-    .metric.average.response_time*data(value: 0,count: 0)
+    .metric.response_time*data(display:"average",type:"response_time")
       label Average Response Time
       .data 0
 
