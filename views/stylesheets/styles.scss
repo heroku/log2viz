@@ -150,11 +150,8 @@ textarea {
    }
 
    .tooltip:hover span {
-    border-radius: 5px 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
-    -webkit-box-shadow: 5px 5px rgba(0, 0, 0, 0.1); -moz-box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+    @include border-radius (5px);
+    @include box-shadow (5px 5px rgba(0, 0, 0, 0.1));
     position: absolute;
     background: #262535;
     left: 0px;
@@ -178,12 +175,8 @@ textarea {
     }
 
    .two-col-list {
-    -moz-column-count: 2;
-    -moz-column-gap: 20px;
-    -webkit-column-count: 2;
-    -webkit-column-gap: 10px;
-    column-count: 2;
-    column-gap: 10px;
+    @include column-count(2);
+    @include column-gap(10px);
     width:70%;
     list-style-position: inside;
     list-style-type: square;
@@ -234,17 +227,6 @@ textarea {
    h3.status-item {
     font-size:18px;
     margin:0 5px;
-   }
-
-   #util-form {
-   }
-
-   #change-dynos, #change-processes {
-    width:50px;
-   }
-
-   .button {
-    color:#333;
    }
 
    p.dynos {
