@@ -1,3 +1,5 @@
+
+
 /*
  * HTML5 Boilerplate
  *
@@ -93,7 +95,7 @@ textarea {
 }
 
 /* ==========================================================================
-   Author's custom styles
+   Custom styles
    ========================================================================== */
 
    a {
@@ -170,8 +172,8 @@ textarea {
     }
 
     .linkout {
-      background: url(/link.png) no-repeat right bottom;
-      padding-right:15px;
+    background: url(/link.png) no-repeat right bottom;
+    padding-right:15px;
     }
 
    .two-col-list {
@@ -253,14 +255,6 @@ textarea {
     margin: 0;
     font-weight: normal;
    }
-
-
-
-
-
-
-
-
 
 
 
@@ -363,22 +357,5 @@ textarea {
 
 .clearfix {
     *zoom: 1;
-}
-
-/* ==========================================================================
-   EXAMPLE Media Queries for Responsive Design.
-   These examples override the primary ('mobile first') styles.
-   Modify as content requires.
-   ========================================================================== */
-
-@media only screen and (min-width: 35em) {
-    /* Style adjustments for viewports that meet the condition */
-}
-
-@media print,
-       (-o-min-device-pixel-ratio: 5/4),
-       (-webkit-min-device-pixel-ratio: 1.25),
-       (min-resolution: 120dpi) {
-    /* Style adjustments for high resolution devices */
 }
 
