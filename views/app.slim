@@ -26,8 +26,10 @@ html
             h3.score
               .data 0
         .col
-          .metric*data(display:"sum",type:"requests",label:" rpm")
-            h2 Throughput
+          .metric.will-extrapolate*data(display:"sum",type:"requests",label:" rpm")
+            h2 
+              | Throughput
+              span.extrapolated *
             h3.score
               .data 0
 
@@ -42,9 +44,10 @@ html
             h2 Response Status
             ul.data.two-col-list
 
-      .metric.utilization*data(display:"utilization",type:"response_time",procs:@concurrency*@ps.count)
+      .metric.utilization.will-extrapolate*data(display:"utilization",type:"response_time",procs:@concurrency*@ps.count)
         h2
           | Utilization
+          span.extrapolated *
           span.learnmore
             a.tooltip href="#"
               | Learn More
@@ -52,3 +55,9 @@ html
         .util-max
           h3.util.score.data
         p.dynos #{@concurrency * @ps.count} web processes (#{@ps.count} dynos x #{@concurrency} processes per dyno)
+
+
+      #extraploated-legend.extrapolated 
+        | * - Value extrapolated from 
+        span.data 0
+        |  seconds of logs

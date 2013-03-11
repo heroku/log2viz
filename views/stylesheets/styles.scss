@@ -149,6 +149,10 @@ textarea {
     position: relative;
    }
 
+   .extrapolated {
+    display: none;
+   }
+
    .tooltip:hover span {
     border-radius: 5px 5px;
     -moz-border-radius: 5px;

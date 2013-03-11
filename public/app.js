@@ -1,5 +1,6 @@
 var data = [];
 var metrics;
+var will_extrapolate = true;
 
 Date.timestamp = function() { return Math.round(Date.now()/1000); };
 
@@ -20,18 +21,25 @@ function streamLogs(app, elem) {
       console.log(e);
     }
   }, false);
+
+  updateValues();
 }
 
-var WINDOW_SIZE = 60;
+var CURRENT_WINDOW_SIZE = 0;
+var MAX_WINDOW_SIZE = 60;
 var WINDOW_OFFSET = 10;
 
 function updateValues() {
-  var window_start = _.sortedIndex(data, {timestamp: Date.timestamp() - (WINDOW_SIZE + WINDOW_OFFSET)}, 'timestamp')
+  var window_start = _.sortedIndex(data, {timestamp: Date.timestamp() - (MAX_WINDOW_SIZE + WINDOW_OFFSET + 1)}, 'timestamp')
   if (window_start > 0) {
     data.splice(0, window_start);
   }
   var window_end = _.sortedIndex(data, {timestamp: Date.timestamp() - (WINDOW_OFFSET)}, 'timestamp')
   var data_window = data.slice(0, window_end)
+  if (data_window.length != 0) {
+    CURRENT_WINDOW_SIZE = will_extrapolate ? Math.min(MAX_WINDOW_SIZE, Math.max(1, data_window[data_window.length - 1]['timestamp'] - data_window[0]['timestamp'])) 
+                                           : MAX_WINDOW_SIZE;
+  }
 
   metrics = new Object();
 
@@ -54,10 +62,19 @@ function updateValues() {
       var value = window[display](metrics[type], this);
     }
   });
+
+  if (will_extrapolate && CURRENT_WINDOW_SIZE != MAX_WINDOW_SIZE) {
+    $("#extraploated-legend .data").text(CURRENT_WINDOW_SIZE);
+    $(".extrapolated").show();
+  } else {
+    will_extrapolate = false;
+    $(".extrapolated").remove();
+  }
 }
 
 function sum(items, elem) {
   var value = items.length;
+  value = Math.round(value/(CURRENT_WINDOW_SIZE/MAX_WINDOW_SIZE))
   $(".data", elem).text(value + $(elem).data("label"))
 }
 
@@ -93,7 +110,7 @@ function utilization(items, elem) {
   var utilization;
   $.each(items, function() { sum += this });
 
-  utilization = ((sum/(WINDOW_SIZE * 1000 * $(elem).data("procs"))) * 100).toFixed(2)
+  utilization = ((sum/(CURRENT_WINDOW_SIZE * 1000 * $(elem).data("procs"))) * 100).toFixed(2)
   $(".data", elem).text(utilization + "%").css("width", utilization + "%")
 }
 
