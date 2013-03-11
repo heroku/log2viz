@@ -22,18 +22,23 @@ function streamLogs(app, elem) {
   }, false);
 }
 
+var WINDOW_SIZE = 60;
+var WINDOW_OFFSET = 10;
+
 function updateValues() {
-  var index = _.sortedIndex(data, {timestamp: Date.timestamp() - 65}, 'timestamp')
-  if (index > 0) {
-    data.splice(0, index);
+  var window_start = _.sortedIndex(data, {timestamp: Date.timestamp() - (WINDOW_SIZE + WINDOW_OFFSET)}, 'timestamp')
+  if (window_start > 0) {
+    data.splice(0, window_start);
   }
+  var window_end = _.sortedIndex(data, {timestamp: Date.timestamp() - (WINDOW_OFFSET)}, 'timestamp')
+  var data_window = data.slice(0, window_end)
 
   metrics = new Object();
 
   // Aggregate metrics
-  $.each(data, function(k, item) {
+  $.each(data_window, function(k, item) {
     $.each(item, function(k,v) {
-      if (metrics[k] === undefined) { metrics[k] = []; }
+      metrics[k] === undefined ? metrics[k] = [] : null;
       metrics[k].push(v);
     });
   });
@@ -43,22 +48,28 @@ function updateValues() {
     var display = $(this).data("display");
 
     if (metrics[type] === undefined) {
-      $(".data", this).text("No data")      
+      $(".data", this).text("Calculating...")
     } else {
-      var value = window[display](metrics[type]);
-      $(".data", this).text(value)      
+      var value = window[display](metrics[type], this);
+      $(".data", this).text(value + " " + $(this).data("label"))
     }
   });
 }
 
-function counter(items) {
-  return items.length
+function sum(items) {
+  return items.length;
 }
 
-function average(items) {
+function average(items, elem) {
   var sum = 0;
-  $.each(items, function() { sum += this })
-  return sum/Math.max(items.length,1)
+  var units = $(elem).data("units") === undefined ? 1 : $(elem).data("units")
+
+  $.each(items, function() { sum += this });
+  return Math.round(sum/Math.max(items.length,1)/units);
+}
+
+function counter(items) {
+
 }
 
 function median(items) {

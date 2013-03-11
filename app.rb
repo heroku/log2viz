@@ -34,12 +34,13 @@ class App < Sinatra::Base
   get '/app/:id' do
     heroku = Heroku::API.new(:api_key => request.env['bouncer.token']) 
     @app = heroku.get_app(params[:id]).body
+    @ps = heroku.get_ps(params[:id]).body.select{|x| x["process"].include?("web.")}
     slim :app
   end
 
   get "/log/:id", provides: 'text/event-stream' do
     @heroku = Heroku::API.new(:api_key => request.env['bouncer.token']) 
-    url = @heroku.get_logs(params[:id], {'tail' => 1, 'num' => 5000, 'ps' => 'router'}).body
+    url = @heroku.get_logs(params[:id], {'tail' => 1, 'num' => 5000}).body
 
     stream :keep_open do |out|
       # Keep connection open on cedar
@@ -61,18 +62,27 @@ class App < Sinatra::Base
         while line = buffer.slice!(/.+\n/)
           matches = line.force_encoding('utf-8').match(/(\S+)\s(\w+)\[(\w|.+)\]\:\s(.*)/)
 
-          timestamp = DateTime.parse(matches[1]).to_time.to_i
-          ps = matches[3]
+          ps = matches[3].split('.').first
           data = Hash[ matches[4].split(" ").map{|j| j.split("=")} ]
 
-          parsed_line = {
-            "timestamp" => timestamp,
-            "requests" => 1,
-            "response_time" => data["service"].to_i,
-            "status" => data["status"].to_i
-          }
+          parsed_line = {}
 
-          out << "data: #{parsed_line.to_json}\n\n" unless parsed_line.empty?
+          if ps == "router"
+            parsed_line = {
+              "requests" => 1,
+              "response_time" => data["service"].to_i,
+              "status" => data["status"].to_i
+            }
+          elsif data.fetch("measure","").include?("web.memory_total")
+            parsed_line = {
+              "memory_usage" => data["val"].to_i
+            }
+          end
+
+          unless parsed_line.empty?
+            parsed_line["timestamp"] = DateTime.parse(matches[1]).to_time.to_i
+            out << "data: #{parsed_line.to_json}\n\n"
+          end
         end
       end
     end
