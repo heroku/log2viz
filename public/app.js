@@ -51,31 +51,48 @@ function updateValues() {
       $(".data", this).text("Calculating...")
     } else {
       var value = window[display](metrics[type], this);
-      $(".data", this).text(value + " " + $(this).data("label"))
     }
   });
 }
 
-function sum(items) {
-  return items.length;
+function sum(items, elem) {
+  var value = items.length;
+  $(".data", elem).text(value + $(elem).data("label"))
 }
 
 function average(items, elem) {
+  var value;
   var sum = 0;
   var units = $(elem).data("units") === undefined ? 1 : $(elem).data("units")
 
   $.each(items, function() { sum += this });
-  return Math.round(sum/Math.max(items.length,1)/units);
+  value = Math.round(sum/Math.max(items.length,1)/units);
+  $(".data", elem).text(value + $(elem).data("label"))
 }
 
-function counter(items) {
+function counter(items, elem) {
+  var container;
+  var values = {}
+  $.each(items, function() {
+    values[this] === undefined ? values[this] = 0 : null;
+    values[this] += 1
+  });
 
+  container = $(".data", elem)
+  container.empty()
+  $.each(Object.keys(values).sort(), function(k,v) {
+    container.append($("<li>" + v + ", " + values[v] + "</li>"))
+  })
 }
 
-function median(items) {
+function utilization(items, elem) {
   return "unimplemented"
 }
 
-function perc95(items) {
+function median(items, elem) {
+  return "unimplemented"
+}
+
+function perc95(items, elem) {
   return "unimplemented"
 }
