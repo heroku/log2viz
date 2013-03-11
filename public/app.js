@@ -74,6 +74,8 @@ function average(items, elem) {
 function counter(items, elem) {
   var container;
   var values = {}
+  $.each($(elem).data("default"), function() { values[this] = 0 })
+
   $.each(items, function() {
     values[this] === undefined ? values[this] = 0 : null;
     values[this] += 1
@@ -82,7 +84,7 @@ function counter(items, elem) {
   container = $(".data", elem)
   container.empty()
   $.each(Object.keys(values).sort(), function(k,v) {
-    container.append($("<li>" + v + ", " + values[v] + "</li>"))
+    container.append($("<li>" + v + ": " + values[v] + "</li>"))
   })
 }
 
