@@ -5,8 +5,11 @@ html
     link rel="stylesheet" type="text/css" href="/stylesheets/styles.css"
     script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"
     script src="/app.js"
-  body  
-    ul
-      - @apps.each do |app|
-        li
-          a href="/app/#{app["name"]}" = app["name"]
+  body
+    #wrapper
+      h1 Analog.
+      h5 realtime analysis of your Heroku apps from last 60 seconds of app logs
+      ul.two-col-list
+        - @apps.each do |app|
+          li
+            a href="/app/#{app["name"]}" = app["name"]

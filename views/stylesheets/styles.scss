@@ -174,7 +174,7 @@ textarea {
       padding-right:15px;
     }
 
-   .output-status {
+   .two-col-list {
     -moz-column-count: 2;
     -moz-column-gap: 20px;
     -webkit-column-count: 2;
@@ -182,7 +182,10 @@ textarea {
     column-count: 2;
     column-gap: 10px;
     width:70%;
-}
+    list-style-position: inside;
+    list-style-type: square;
+    margin-left:-40px;
+    }
 
    .util {
     background: #37a800;
@@ -214,11 +217,12 @@ textarea {
    }
 
    h3.score {
-    font-size:30px;
+    font-size:26px;
     margin:5px 0;
    }
 
    .util h3.score {
+    font-size:28px;
     margin:5px 10px;
    }
 
