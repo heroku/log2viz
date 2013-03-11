@@ -46,9 +46,9 @@ html
         h2
           | Utilization
           /!span.learnmore
-            a.tooltip.linkout href="#"
+            a.tooltip href="#"
               | Learn More
-              span.response-info Here we show a summary of your response statuses and error logs. Click for more.
+              span.response-info Utilization measures how busy your dynos are. For best results, keep below 50%.
         .util-max
           h3.util.score.data
         p.dynos #{@concurrency * @ps.count} web processes (#{@ps.count} dynos x #{@concurrency} processes per dyno)
