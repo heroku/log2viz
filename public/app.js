@@ -23,7 +23,7 @@ function streamLogs(app, elem) {
 }
 
 function updateValues() {
-  var index = _.sortedIndex(data, {timestamp: Date.timestamp() - 60}, 'timestamp')
+  var index = _.sortedIndex(data, {timestamp: Date.timestamp() - 65}, 'timestamp')
   if (index > 0) {
     data.splice(0, index);
   }
