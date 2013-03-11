@@ -50,7 +50,4 @@ html
           img alt="Optimal utilization is 40%" src="/optimal.png"
           .util style="width:80%"
             h3.score 80%
-        .dynos
-          | running on 
-          = @ps.count 
-          |  web dynos
+        p.dynos #{@concurrency * @ps.count} web processes (#{@ps.count} dynos x #{@concurrency} per dyno)

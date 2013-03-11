@@ -35,6 +35,7 @@ class App < Sinatra::Base
     heroku = Heroku::API.new(:api_key => request.env['bouncer.token']) 
     @app = heroku.get_app(params[:id]).body
     @ps = heroku.get_ps(params[:id]).body.select{|x| x["process"].include?("web.")}
+    @concurrency = 3 # TODO: replace with config
     slim :app
   end
 
