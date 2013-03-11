@@ -15,7 +15,7 @@ html
       h1= @app["name"]
       h5 realtime analysis of last 60 seconds from app logs
 
-      .three-col
+      .three-col.clearfix
         .col
           .metric*data(display:"average",type:"response_time",label:"ms")
             h2 Average Response Time
