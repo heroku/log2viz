@@ -26,12 +26,14 @@ class App < Sinatra::Base
   end
 
   get "/" do
-    @heroku = Heroku::API.new(:api_key => request.env['bouncer.token']) 
-    @apps = @heroku.get_apps.body
+    heroku = Heroku::API.new(:api_key => request.env['bouncer.token']) 
+    @apps = heroku.get_apps.body
     slim :index
   end
 
   get '/app/:id' do
+    heroku = Heroku::API.new(:api_key => request.env['bouncer.token']) 
+    @app = heroku.get_app(params[:id]).body
     slim :app
   end
 

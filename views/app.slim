@@ -12,7 +12,7 @@ html
         streamLogs('#{params[:id]}', $('table.logs tbody'));
       });
 
-    h3 Analog
+    h1= @app["name"]
 
     .metric.requests*data(display:"counter",type:"requests")
       label Throughput
