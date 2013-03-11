@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 
+=======
+@import "compass";
+>>>>>>> 8f4af11f0a3d501787ab093369f7937a4f5fa7c3
 
 /*
  * HTML5 Boilerplate
@@ -190,9 +194,11 @@ textarea {
     }
 
    .util {
+    @include box-sizing(border-box);
     background: #37a800;
-    height:40px;
-    width:38%;
+    height: 40px;
+    padding-left: 6px;
+    width: 0%;
    }
 
    .util-max {

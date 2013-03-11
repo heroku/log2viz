@@ -48,8 +48,9 @@ function updateValues() {
     var display = $(this).data("display");
 
     if (metrics[type] === undefined) {
-      $(".data", this).text("Calculating...")
+      $(this).addClass("loading")
     } else {
+      $(this).removeClass("loading")
       var value = window[display](metrics[type], this);
     }
   });
@@ -86,7 +87,12 @@ function counter(items, elem) {
 }
 
 function utilization(items, elem) {
-  return "unimplemented"
+  var sum = 0;
+  var utilization;
+  $.each(items, function() { sum += this });
+
+  utilization = ((sum/(WINDOW_SIZE * 1000 * $(elem).data("procs"))) * 100).toFixed(2)
+  $(".data", elem).text(utilization + "%").css("width", utilization + "%")
 }
 
 function median(items, elem) {
