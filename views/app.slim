@@ -11,16 +11,55 @@ html
       $(function(){
         streamLogs('#{params[:id]}', $('table.logs tbody'));
       });
+    #wrapper
+      h1= @app["name"]
+      h5 realtime analysis of last 60 seconds from app logs
+      .three-col
+        .col
+          .metric.response_time*data(display:"average",type:"response_time")
+            h2 Average Response Time
+            h3.score
+              .data 0
 
-    h1= @app["name"]
+          .metric.response_time*data(display:"average",type:"response_time")
+            h2 Median Response Time
+            h3.score
+              .data 0
 
-    .metric.requests*data(display:"counter",type:"requests")
-      label Throughput
-      .data 0
+          .metric.response_time*data(display:"average",type:"response_time")
+            h2 Average Queue Time
+            h3.score
+              .data 0
 
-    .metric.response_time*data(display:"average",type:"response_time")
-      label Average Response Time
-      .data 0
 
-    table.logs
-      tbody
+        .col
+          .metric.requests*data(display:"counter",type:"requests")
+            h2 Throughput
+            h3.score
+              .data 0
+
+          .metric.requests*data(display:"counter",type:"requests")
+            h2 Memory Usage
+            h3.score
+              .data 0
+
+        .col
+          .metric.response_time*data(display:"average",type:"response_time")
+            h2 Response Status
+            .data 0
+
+      .utilization data-value="80"
+        h2
+          | Utilization
+          span.learnmore
+            a.tooltip.linkout href="#"
+              | Learn More
+              span.response-info Here we show a summary of your response statuses and error logs. Click for more.
+        .util-max
+          img alt="Optimal utilization is 40%" src="/optimal.png"
+          .util style="width:80%"
+            h3.score 80%
+        p.dynos
+
+      table.logs
+        tbody
