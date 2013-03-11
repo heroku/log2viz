@@ -27,7 +27,7 @@ class App < Sinatra::Base
 
   get "/" do
     heroku = Heroku::API.new(:api_key => request.env['bouncer.token']) 
-    @apps = heroku.get_apps.body
+    @apps = heroku.get_apps.body.sort{|x,y| x["name"] <=> y["name"]}
     slim :index
   end
 
