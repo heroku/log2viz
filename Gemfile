@@ -9,3 +9,4 @@ gem 'http_parser.rb', :git => 'https://github.com/tmm1/http_parser.rb.git', :bra
 gem 'eventmachine', "~>1.0.0.beta"
 gem 'em-http-request', '~>1.0'
 gem 'json'
+gem 'rack-flash3'

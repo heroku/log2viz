@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    title log2viz
+    link rel="stylesheet" type="text/css" href="/stylesheets/styles.css"
+    script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"
+    script src="/underscore.js"
+    script src="/app.js"
+  body
+    #wrapper
+      header.clearfix
+        h1 log2viz
+        h5 realtime analysis of last 60 seconds from app logs
+        ul#nav
+          li #{@user["email"]}
+          li
+            a href="/" Apps
+          li
+            a href="https://dashboard.heroku.com" Account
+          li
+            a href="/auth/sso-logout" Logout
+
+      == slim :"partials/_flash", layout: false
+
+      == yield

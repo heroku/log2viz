@@ -1,5 +1,6 @@
 require 'bundler'
 Bundler.require
+require 'rack-flash'
 
 STDOUT.sync = true
 
@@ -7,6 +8,7 @@ class App < Sinatra::Base
   set :raise_errors, false
   set :show_exceptions, false
 
+  use Rack::Flash
 
   configure :development do
     require "sinatra/reloader"
@@ -28,6 +30,12 @@ class App < Sinatra::Base
     end
   end
 
+  before do
+    if request.env['bouncer.user']
+      @user = request.env['bouncer.user']
+    end
+  end
+
   get "/" do
     heroku = Heroku::API.new(:api_key => request.env['bouncer.token']) 
     @apps = heroku.get_apps.body.sort{|x,y| x["name"] <=> y["name"]}
@@ -37,10 +45,17 @@ class App < Sinatra::Base
   get '/app/:id' do
     heroku = Heroku::API.new(:api_key => request.env['bouncer.token']) 
     @app = heroku.get_app(params[:id]).body
-    @ps = heroku.get_ps(params[:id]).body.select{|x| x["process"].include?("web.")}
 
-    config = heroku.get_config_vars(params[:id]).body
-    @concurrency = (config["UNICORN_WORKERS"] || config["WEB_CONCURRENCY"] || 1).to_i
+    begin 
+      @ps = heroku.get_ps(params[:id]).body.select{|x| x["process"].include?("web.")}.count
+
+      config = heroku.get_config_vars(params[:id]).body
+      @concurrency = (config["UNICORN_WORKERS"] || config["WEB_CONCURRENCY"] || 1).to_i
+    rescue
+      @ps = 1
+      @concurrency = 1
+      flash.now[:error] = "Process data not available"
+    end
 
     slim :app
   end

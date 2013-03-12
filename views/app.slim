@@ -1,54 +1,45 @@
-doctype html
-html
-  head
-    title log2viz - #{params[:id]}
-    link rel="stylesheet" type="text/css" href="/stylesheets/styles.css"
-    script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"
-    script src="/underscore.js"
-    script src="/app.js"
-  body
-    javascript:
-      $(function(){
-        streamLogs('#{params[:id]}', $('table.logs tbody'));
-      });
-    #wrapper
-      h1= @app["name"]
-      h5 realtime analysis of last 60 seconds from app logs
+javascript:
+  $(function(){
+    streamLogs('#{params[:id]}', $('table.logs tbody'));
+  });
 
-      .three-col.clearfix
-        .col
-          .metric*data(display:"median",type:"response_time",label:"ms")
-            h2 Median Response Time
-            h3.score
-              .data 0
-          .metric*data(display:"perc95",type:"response_time",label:"ms")
-            h2 95th Percentile Response Time
-            h3.score
-              .data 0
-        .col
-          .metric*data(display:"sum",type:"requests",label:" rpm")
-            h2 Throughput
-            h3.score
-              .data 0
+h1= params[:id]
 
-          .metric*data(display:"average",type:"memory_usage",units:1000000,label:"MB")
-            h2 Average Memory Usage
-            h3.score
-              span.data 0
-              span  of 512MB
+.three-col.clearfix
+  .col
+    .metric*data(display:"median",type:"response_time",label:"ms")
+      h2 Response Time
+      h3 Median
+      h3.score
+        .data 0
+    .metric*data(display:"perc95",type:"response_time",label:"ms")
+      h3 95th Percentile
+      h3.score
+        .data 0
+  .col
+    .metric*data(display:"sum",type:"requests",label:" rpm")
+      h2 Throughput
+      h3.score
+        .data 0
 
-        .col
-          .metric*data(display:"counter",type:"status",default:["2xx","3xx","4xx","5xx"])
-            h2 Response Status
-            ul.data.two-col-list
+    .metric*data(display:"average",type:"memory_usage",units:1000000,label:"MB")
+      h2 Average Memory Usage
+      h3.score
+        span.data 0
+        span  of 512MB
 
-      .metric.utilization*data(display:"utilization",type:"response_time",procs:@concurrency*@ps.count)
-        h2
-          | Utilization
-          span.learnmore
-            a.tooltip href="#"
-              | Learn More
-              span.response-info Utilization measures how busy your dynos are. For best results, keep below 50%.
-        .util-max
-          h3.util.score.data
-        p.dynos #{@concurrency * @ps.count} web processes (#{@ps.count} dynos x #{@concurrency} processes per dyno)
+  .col
+    .metric*data(display:"counter",type:"status",default:["2xx","3xx","4xx","5xx"])
+      h2 Response Status
+      ul.data.two-col-list
+
+.metric.utilization*data(display:"utilization",type:"response_time",procs:@concurrency*@ps)
+  h2
+    | Utilization
+    span.learnmore
+      a.tooltip href="#"
+        | Learn More
+        span.response-info Utilization measures how busy your dynos are. For best results, keep below 50%.
+  .util-max
+    h3.util.score.data
+  p.dynos #{@concurrency * @ps} web processes (#{@ps} dynos x #{@concurrency} processes per dyno)

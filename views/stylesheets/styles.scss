@@ -19,6 +19,30 @@
       background-color:#1b1b24;
   }
 
+  #wrapper {
+    width:980px;
+    margin:10px auto;
+   }
+
+  header {
+    position:relative;
+    width:100%;
+    margin-bottom:10px;
+  }
+
+  #nav {
+    float:right;
+    position:absolute;
+    top:10px;
+    right:10px;
+    list-style: none;
+
+    li {
+      display:inline;
+      padding:10px;
+    }
+  }
+
   h1 {
     margin-bottom: 0;
     font-weight: 500;
@@ -42,13 +66,12 @@
     text-decoration: none;
    }
 
-  .loading {
-    opacity: .3;
+  .logout {
+    float:right;
    }
 
-  #wrapper {
-    width:980px;
-    margin:10px auto;
+  .loading {
+    opacity: .3;
    }
 
   .three-col {
@@ -83,9 +106,6 @@
     margin:0 5px;
    }
 
-   p.dynos {
-    font-weight: 300;
-   }
 
   .clearfix:before,
   .clearfix:after {
