@@ -22,11 +22,10 @@ h1.page-title= params[:id]
       h3.score
         .data 0
 
-    .metric*data(display:"average",type:"memory_usage",units:1000000,label:"MB")
+    .metric*data(display:"average",type:"memory_usage",units:1000000,label:"MB of 512MB")
       h2 Average Memory Usage
       h3.score
         span.data 0
-        span  of 512MB
 
   .col
     .metric*data(display:"counter",type:"status",default:["2xx","3xx","4xx","5xx"])

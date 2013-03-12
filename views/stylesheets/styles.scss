@@ -60,6 +60,7 @@
     font-weight: 300;
     border-bottom:1px solid rgba(70,67,104,.7);
     font-size:20px;
+    padding-bottom: 3px;
     margin:0 0 10px 0;
    }
 
@@ -90,7 +91,9 @@
    }
 
   .loading {
-    opacity: .3;
+    .data {
+      opacity: .3;
+    }
    }
 
   .three-col {

@@ -1,7 +1,14 @@
 var data = [];
 var metrics;
 
+var WINDOW_SIZE = 60;
+var WINDOW_OFFSET = 10;
+
 Date.timestamp = function() { return Math.round(Date.now()/1000); };
+
+$(function() {
+  updateValues();
+});
 
 function streamLogs(app, elem) {
   var source = new EventSource('/log/' + app);
@@ -21,9 +28,6 @@ function streamLogs(app, elem) {
     }
   }, false);
 }
-
-var WINDOW_SIZE = 60;
-var WINDOW_OFFSET = 10;
 
 function updateValues() {
   var window_start = _.sortedIndex(data, {timestamp: Date.timestamp() - (WINDOW_SIZE + WINDOW_OFFSET)}, 'timestamp')
@@ -49,9 +53,10 @@ function updateValues() {
 
     if (metrics[type] === undefined) {
       $(this).addClass("loading")
+      showDefault(this);
     } else {
       $(this).removeClass("loading")
-      var value = window[display](metrics[type], this);
+      window[display](metrics[type], this);
     }
   });
 }
@@ -76,7 +81,7 @@ function average(items, elem) {
 }
 
 function counter(items, elem) {
-  var container;
+  var container = $(".data", elem)
   var values = {}
   if ($(elem).data("default")) {
     $.each($(elem).data("default"), function() { values[this] = 0 })
@@ -87,7 +92,6 @@ function counter(items, elem) {
     values[this] += 1
   });
 
-  container = $(".data", elem)
   container.empty()
   $.each(Object.keys(values).sort(), function(k,v) {
     container.append($("<li>" + v + ": " + values[v] + "</li>"))
@@ -121,6 +125,11 @@ function percentile_index(items, percentile) {
 ///////////////////////////////////////////
 // Helpers
 ///////////////////////////////////////////
+
+function showDefault(elem) {
+  $(".data", elem).empty().text("No data")
+}
+
 function setText(elem, value) {
   $(".data", elem).text(value + $(elem).data("label"))
 }
