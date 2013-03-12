@@ -12,17 +12,25 @@ html
         streamLogs('#{params[:id]}', $('table.logs tbody'));
       });
     #wrapper
-      h1= @app["name"]
-      h5 realtime analysis of last 60 seconds from app logs
+      header.clearfix
+        h1= @app["name"]
+        h5 realtime analysis of last 60 seconds from app logs
+        ul#nav
+          li You are logged in as xxx
+          li
+            a href="/" Applist
+          li
+            a href="/auth/logout" Logout
 
       .three-col.clearfix
         .col
           .metric*data(display:"median",type:"response_time",label:"ms")
-            h2 Median Response Time
+            h2 Response Time
+            h3 Median
             h3.score
               .data 0
           .metric*data(display:"perc95",type:"response_time",label:"ms")
-            h2 95th Percentile Response Time
+            h3 95th Percentile
             h3.score
               .data 0
         .col
