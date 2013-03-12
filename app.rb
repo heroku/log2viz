@@ -45,6 +45,7 @@ class App < Sinatra::Base
   get '/app/:id' do
     heroku = Heroku::API.new(:api_key => request.env['bouncer.token']) 
     @app = heroku.get_app(params[:id]).body
+    @title = params[:id]
 
     begin 
       @ps = heroku.get_ps(params[:id]).body.select{|x| x["process"].include?("web.")}.count
