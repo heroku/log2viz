@@ -37,7 +37,7 @@ class App < Sinatra::Base
     @ps = heroku.get_ps(params[:id]).body.select{|x| x["process"].include?("web.")}
 
     config = heroku.get_config_vars(params[:id]).body
-    @concurrency = (config["UNICORN_WORKERS"] || config["WEB_CONCURRENCY"] || 1).to_i
+    @concurrency = (config["UNICORN_WORKERS"] || config["WEB_CONCURRENCY"] || params[:concurrency] || 1).to_i
 
     slim :app
   end

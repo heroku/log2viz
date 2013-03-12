@@ -3,17 +3,31 @@ html
   head
     title log2viz - #{params[:id]}
     link rel="stylesheet" type="text/css" href="/stylesheets/styles.css"
+    link rel="stylesheet" type="text/css" href="/stylesheets/rickshaw.min.css"
     script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"
     script src="/underscore.js"
+    script src="/d3.min.js"
+    script src="/rickshaw.min.js"
     script src="/app.js"
   body
     javascript:
       $(function(){
+        setupGraph();
         streamLogs('#{params[:id]}', $('table.logs tbody'));
       });
     #wrapper
       h1= @app["name"]
       h5 realtime analysis of last 60 seconds from app logs
+
+      .three-col.clearfix.chart
+        #chart
+        ul.graph_metrics
+          li.col*data(display:"percentile_index",type:"response_time",value:50)
+            input type="checkbox" checked=true name="median_response_time"
+            label for="median_response_time" Median Resp. Time
+          li.col*data(display:"percentile_index",type:"response_time",value:95)
+            input type="checkbox" checked=false name="perc95_response_time"
+            label for="perc95_response_time" 95th Pct. Resp. Time
 
       .three-col.clearfix
         .col

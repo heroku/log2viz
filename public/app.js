@@ -1,7 +1,25 @@
 var data = [];
 var metrics;
+var graph;
 
 Date.timestamp = function() { return Math.round(Date.now()/1000); };
+
+function setupGraph() {
+  graph = new Rickshaw.Graph( {
+    element: document.getElementById("chart"),
+    height: 125,
+    renderer: 'line',
+    series: new Rickshaw.Series.FixedDuration([{
+      name: 'median_response_time'
+    }], undefined, {
+      timeInterval: 1000,
+      maxDataPoints: 60,
+      timeBase: new Date().getTime() / 1000
+    })
+  });
+  new Rickshaw.Graph.HoverDetail({ graph: graph });
+  graph.render();
+}
 
 function streamLogs(app, elem) {
   var source = new EventSource('/log/' + app);
@@ -54,6 +72,23 @@ function updateValues() {
       var value = window[display](metrics[type], this);
     }
   });
+
+  var graphData = {};
+  $(".graph_metrics li input:checked").each(function() {
+    var parentElem = $(this).parent();
+    var type = parentElem.data("type");
+    var display = parentElem.data("display");
+    var value = parentElem.data("value");
+
+    if (metrics[type] === undefined) {
+      $(this).addClass("loading")
+    } else {
+      $(this).removeClass("loading")
+      graphData[$(this).attr("name")] = window[display](metrics[type], value);
+    }
+  });
+  graph.series.addData(graphData);
+  graph.render();
 }
 
 function sum(items, elem) {
