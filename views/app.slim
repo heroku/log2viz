@@ -32,6 +32,9 @@ h1.page-title= params[:id]
     .metric*data(display:"counter",type:"status",default:["2xx","3xx","4xx","5xx"])
       h2 Response Status
       ul.data.two-col-list
+    .metric*data(display:"counter",type:"error")
+      h2 Heroku Error Code
+      ul.data.two-col-list
 
 .metric.utilization*data(display:"utilization",type:"response_time",procs:@concurrency*@ps)
   h2

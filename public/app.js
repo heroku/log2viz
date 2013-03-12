@@ -74,7 +74,9 @@ function average(items, elem) {
 function counter(items, elem) {
   var container;
   var values = {}
-  $.each($(elem).data("default"), function() { values[this] = 0 })
+  if ($(elem).data("default")) {
+    $.each($(elem).data("default"), function() { values[this] = 0 })
+  }
 
   $.each(items, function() {
     values[this] === undefined ? values[this] = 0 : null;
