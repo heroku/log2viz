@@ -59,6 +59,8 @@ GEM
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
     rack (1.5.2)
+    rack-flash3 (1.0.3)
+      rack
     rack-protection (1.4.0)
       rack
     rack-test (0.6.2)
@@ -95,6 +97,7 @@ DEPENDENCIES
   heroku-bouncer
   http_parser.rb!
   json
+  rack-flash3
   sinatra-contrib
   slim
   thin

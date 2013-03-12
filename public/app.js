@@ -56,9 +56,13 @@ function updateValues() {
   });
 }
 
+///////////////////////////////////////////
+// Measurements
+///////////////////////////////////////////
+
 function sum(items, elem) {
   var value = items.length;
-  $(".data", elem).text(value + $(elem).data("label"))
+  setText(elem, value);
 }
 
 function average(items, elem) {
@@ -68,13 +72,15 @@ function average(items, elem) {
 
   $.each(items, function() { sum += this });
   value = Math.round(sum/Math.max(items.length,1)/units);
-  $(".data", elem).text(value + $(elem).data("label"))
+  setText(elem, value);
 }
 
 function counter(items, elem) {
   var container;
   var values = {}
-  $.each($(elem).data("default"), function() { values[this] = 0 })
+  if ($(elem).data("default")) {
+    $.each($(elem).data("default"), function() { values[this] = 0 })
+  }
 
   $.each(items, function() {
     values[this] === undefined ? values[this] = 0 : null;
@@ -93,22 +99,28 @@ function utilization(items, elem) {
   var utilization;
   $.each(items, function() { sum += this });
 
-  utilization = ((sum/(WINDOW_SIZE * 1000 * $(elem).data("procs"))) * 100).toFixed(2)
-  $(".data", elem).text(utilization + "%").css("width", utilization + "%")
+  value = ((sum/(WINDOW_SIZE * 1000 * $(elem).data("procs"))) * 100).toFixed(2)
+  $(".data", elem).css("width", value + "%")
+  setText(elem, value)
 }
 
 function median(items, elem) {
-  var value = percentile_index(items, 50);
-  $(".data", elem).text(value + $(elem).data("label"))
+  setText(elem, percentile_index(items, 50));
 }
 
 function perc95(items, elem) {
-  var value = percentile_index(items, 95);
-  $(".data", elem).text(value + $(elem).data("label"))
+  setText(elem, percentile_index(items, 95));
 }
 
 function percentile_index(items, percentile) {
   percentile = percentile/100
   items.sort(function(a,b) { return a - b })
   return items[Math.ceil((Math.max(items.length - 1,0)) * percentile)]
+}
+
+///////////////////////////////////////////
+// Helpers
+///////////////////////////////////////////
+function setText(elem, value) {
+  $(".data", elem).text(value + $(elem).data("label"))
 }
