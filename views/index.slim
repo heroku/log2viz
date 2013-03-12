@@ -1,23 +1,4 @@
-doctype html
-html
-  head
-    title log2viz
-    link rel="stylesheet" type="text/css" href="/stylesheets/styles.css"
-    script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"
-    script src="/app.js"
-  body
-    #wrapper
-      header.clearfix
-        h1 log2viz
-        h5 realtime analysis of your Heroku apps from last 60 seconds of app logs
-        ul#nav
-          li You are logged in as xxx
-          li
-            a href="/" Applist
-          li
-            a href="/auth/logout" Logout
-
-      ul.two-col-list
-        - @apps.each do |app|
-          li
-            a href="/app/#{app["name"]}" = app["name"]
+ul.two-col-list
+  - @apps.each do |app|
+    li
+      a href="/app/#{app["name"]}" = app["name"]
