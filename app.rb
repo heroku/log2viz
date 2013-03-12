@@ -4,6 +4,9 @@ Bundler.require
 STDOUT.sync = true
 
 class App < Sinatra::Base
+  set :raise_errors, false
+  set :show_exceptions, false
+
 
   configure :development do
     require "sinatra/reloader"
@@ -92,6 +95,11 @@ class App < Sinatra::Base
         end
       end
     end
+  end
+
+  error Heroku::API::Errors::Unauthorized do
+    session[:return_to] = request.url
+    redirect to('/auth/heroku')
   end
 
 end
