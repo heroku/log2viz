@@ -36,13 +36,13 @@ h1.page-title= params[:id]
       h2 Heroku Error Code
       ul.data.two-col-list
 
-.metric.utilization*data(display:"utilization",type:"response_time",procs:@concurrency*@ps)
+.metric*data(display:"utilization",type:"response_time",label:"%",procs:@concurrency*@ps)
   h2
     | Utilization
     span.learnmore
       a.tooltip href="#"
         | Learn More
         span.response-info Utilization measures how busy your dynos are. For best results, keep below 50%.
-  .util-max
-    h3.util.score.data
+  .utilization
+    h3.score.data
   p.dynos #{@concurrency * @ps} web processes (#{@ps} dynos x #{@concurrency} processes per dyno)
