@@ -1,0 +1,35 @@
+   .learnmore {
+    font-size:10px;
+    margin-left:5px;
+   }
+
+   .tooltip {
+    outline: none;
+    cursor: hand;
+    position: relative;
+   }
+
+   .tooltip:hover span {
+    @include border-radius (5px);
+    @include box-shadow (5px 5px rgba(0, 0, 0, 0.1));
+    position: absolute;
+    background: #262535;
+    left: 0px;
+    bottom: 15px;
+    z-index: 99;
+    margin-left: 0;
+    padding:10px;
+    font-size: 14px;
+    color:#fff;
+    min-width: 160px;
+    }
+
+   .tooltip span {
+    margin-left: -999em;
+    position: absolute;
+    }
+
+    .linkout {
+    background: url(/link.png) no-repeat right bottom;
+    padding-right:15px;
+    }

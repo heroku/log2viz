@@ -1,5 +1,7 @@
 @import "compass";
 @import "compass/reset";
+@import "tooltips";
+@import "utilization";
 
   html,
   button,
@@ -23,88 +25,47 @@
     font-size: 36px;
    }
 
-   h5 {
-    margin: 0;
-    font-weight: normal;
-   }
-
-   a {
-    color: #00afed;
-    text-decoration: none;
-   }
-
-   .loading {
-    opacity: .3;
-   }
-
-   #wrapper {
-    width:980px;
-    margin:10px auto;
-   }
-
-
-   .three-col {
-    width:100%;
-   }
-
-   .col {
-    float: left;
-    width: 30%;
-    margin-right: 4%;
-   }
-
-   .col:last-child {
-    margin: 0;
-   }
-
-   .utilization {
-    margin:20px 20px 0 0;
-   }
-
-   .utilization h2, .col h2 {
+  h2 {
     font-weight: 300;
     border-bottom:1px solid rgba(70,67,104,.7);
     font-size:20px;
     margin:20px 0 10px 0;
    }
 
-   .learnmore {
-    font-size:10px;
-    margin-left:5px;
+  h5 {
+    margin: 0;
+    font-weight: normal;
    }
 
-   .tooltip {
-    outline: none;
-    cursor: hand;
-    position: relative;
+  a {
+    color: #00afed;
+    text-decoration: none;
    }
 
-   .tooltip:hover span {
-    @include border-radius (5px);
-    @include box-shadow (5px 5px rgba(0, 0, 0, 0.1));
-    position: absolute;
-    background: #262535;
-    left: 0px;
-    bottom: 15px;
-    z-index: 99;
-    margin-left: 0;
-    padding:10px;
-    font-size: 14px;
-    color:#fff;
-    min-width: 160px;
-    }
+  .loading {
+    opacity: .3;
+   }
 
-   .tooltip span {
-    margin-left: -999em;
-    position: absolute;
-    }
+  #wrapper {
+    width:980px;
+    margin:10px auto;
+   }
 
-    .linkout {
-    background: url(/link.png) no-repeat right bottom;
-    padding-right:15px;
-    }
+  .three-col {
+    width:100%;
+   }
 
-   .two-col-list {
+  .col {
+    float: left;
+    width: 30%;
+    margin-right: 4%;
+   }
+
+  .col:last-child {
+    margin: 0;
+   }
+
+  .two-col-list {
     @include column-count(2);
     @include column-gap(10px);
     width:70%;
@@ -112,45 +73,9 @@
     list-style-type: square;
     }
 
-   .util {
-    @include box-sizing(border-box);
-    background: #37a800;
-    height: 40px;
-    padding-left: 6px;
-    width: 0%;
-   }
-
-   .util-max {
-    position:relative;
-   }
-
-   .util-max img {
-    position: absolute;
-    left: 20%;
-    padding-top: 14px;
-    opacity: 0.5;
-   }
-
-   .good {
-    background: #37a800;
-   }
-
-   .bad {
-    background: #fea83b;
-   }
-
-   .ugly {
-    background: #cc3333;
-   }
-
    h3.score {
     font-size:26px;
     margin:5px 0;
-   }
-
-   .util h3.score {
-    font-size:28px;
-    margin:5px 10px;
    }
 
    h3.status-item {
@@ -162,23 +87,22 @@
     font-weight: 300;
    }
 
+  .clearfix:before,
+  .clearfix:after {
+      content: " "; /* 1 */
+      display: table; /* 2 */
+  }
 
-.clearfix:before,
-.clearfix:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
-}
+  .clearfix:after {
+      clear: both;
+  }
 
-.clearfix:after {
-    clear: both;
-}
+  /*
+   * For IE 6/7 only
+   * Include this rule to trigger hasLayout and contain floats.
+   */
 
-/*
- * For IE 6/7 only
- * Include this rule to trigger hasLayout and contain floats.
- */
-
-.clearfix {
-    *zoom: 1;
-}
+  .clearfix {
+      *zoom: 1;
+  }
 

@@ -1,0 +1,43 @@
+   .utilization {
+    margin:20px 20px 0 0;
+   }
+
+   .util {
+    @include box-sizing(border-box);
+    background: #37a800;
+    height: 40px;
+    padding-left: 6px;
+    width: 0%;
+   }
+
+   .util-max {
+    position:relative;
+   }
+
+   .util-max img {
+    position: absolute;
+    left: 20%;
+    padding-top: 14px;
+    opacity: 0.5;
+   }
+
+   .util h3.score {
+    font-size:28px;
+    margin:5px 10px;
+   }
+
+   .good {
+    background: #37a800;
+   }
+
+   .bad {
+    background: #fea83b;
+   }
+
+   .ugly {
+    background: #cc3333;
+   }
+
+   p.dynos {
+    font-weight: 300;
+   }
