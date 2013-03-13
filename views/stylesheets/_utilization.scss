@@ -1,3 +1,10 @@
+.metric[data-display='utilization'].loading {
+  .data {
+    background: none;
+    padding: 0;
+    width: 100%;
+  }
+}
 .utilization {
   position:relative;
 

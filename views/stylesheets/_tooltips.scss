@@ -1,30 +1,46 @@
 .tooltip {
   outline: none;
-  cursor: pointer;
   position: relative;
 
   .label {
+    color: $link_color;
+    cursor: pointer;
     font-size:12px;
     margin-left:5px;
+
+
   }
 
   .content {
     display: none;
+
+    @include border-radius (5px);
+    @include box-shadow (0px 5px 5px rgba(0, 0, 0, 0.3));
+    position: absolute;
+    background: rgba(38, 37, 53, 0.95);
+    left: 0px;
+    top: 28px;
+    z-index: 99;
+    margin-left: -125px;
+    padding: 7px 10px 10px;
+    font-size: 14px;
+    color:#fff;
+    width: 300px;
+
+    &:after {
+      content:"";
+      position: absolute;
+      top: -10px;
+      left: 150px;
+      width:0px; 
+      height:0px; 
+      border-left:10px solid transparent;  /* left arrow slant */
+      border-right:10px solid transparent; /* right arrow slant */
+      border-bottom:10px solid rgba(38, 37, 53, 0.95); /* bottom, add background color here */
+    }
   }
 
   &:hover .content {
-    @include border-radius (5px);
-    @include box-shadow (5px 5px rgba(0, 0, 0, 0.1));
     display: block;
-    position: absolute;
-    background: #262535;
-    left: 0px;
-    bottom: 15px;
-    z-index: 99;
-    margin-left: 0;
-    padding:10px;
-    font-size: 14px;
-    color:#fff;
-    min-width: 200px;
   }
 }

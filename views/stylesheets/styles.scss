@@ -1,14 +1,16 @@
 @import "compass";
 @import "compass/reset";
+@import "config";
 @import "tooltips";
 @import "utilization";
+@import "errors";
 
   html,
   button,
   input,
   select,
   textarea {
-      color: #efefef;
+      color: $text_color;
   }
 
   body {
@@ -60,6 +62,7 @@
     font-weight: 300;
     border-bottom:1px solid rgba(70,67,104,.7);
     font-size:20px;
+    padding-bottom: 3px;
     margin:0 0 10px 0;
    }
 
@@ -81,16 +84,26 @@
   }
 
   a {
-    color: #00afed;
+    color: $link_color;
     text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
    }
+
+  code {
+    font-family: monospace;
+  }
 
   .logout {
     float:right;
    }
 
   .loading {
-    opacity: .3;
+    .data {
+      opacity: .3;
+    }
    }
 
   .three-col {

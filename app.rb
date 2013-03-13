@@ -122,4 +122,14 @@ class App < Sinatra::Base
     redirect to('/auth/heroku')
   end
 
+  error 404 do
+    @title = "Page Not Found"
+    slim :"404"
+  end
+
+  error do
+    @title = "Oops"
+    slim :"500"
+  end
+
 end
