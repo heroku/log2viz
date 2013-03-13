@@ -7,8 +7,8 @@ h1.page-title= params[:id]
 
 .three-col.clearfix
   .col
+    h2 Response Time
     .metric*data(display:"median",type:"response_time",label:"ms")
-      h2 Response Time
       h3
         | Median
         span.learnmore
@@ -20,10 +20,9 @@ h1.page-title= params[:id]
     .metric*data(display:"perc95",type:"response_time",label:"ms")
       h3
         | 95th Percentile
-        span.learnmore
-          a.tooltip href="#"
-            | Learn More
-            span.response-info The slowest 5% of responses. May be caused by long processing times (like a heavy database query) or by queueing behind other requests.
+        span.learnmore.tooltip
+          | Learn More
+          span.response-info The slowest 5% of responses. May be caused by long processing times (like a heavy database query) or by queueing behind other requests.
       h3.score
         .data 0
   .col

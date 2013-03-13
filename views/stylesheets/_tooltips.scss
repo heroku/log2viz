@@ -1,17 +1,21 @@
-   .learnmore {
-    font-size:10px;
+.tooltip {
+  outline: none;
+  cursor: pointer;
+  position: relative;
+
+  .label {
+    font-size:12px;
     margin-left:5px;
-   }
+  }
 
-   .tooltip {
-    outline: none;
-    cursor: hand;
-    position: relative;
-   }
+  .content {
+    display: none;
+  }
 
-   .tooltip:hover span {
+  &:hover .content {
     @include border-radius (5px);
     @include box-shadow (5px 5px rgba(0, 0, 0, 0.1));
+    display: block;
     position: absolute;
     background: #262535;
     left: 0px;
@@ -22,14 +26,5 @@
     font-size: 14px;
     color:#fff;
     min-width: 200px;
-    }
-
-   .tooltip span {
-    margin-left: -999em;
-    position: absolute;
-    }
-
-    .linkout {
-    background: url(/link.png) no-repeat right bottom;
-    padding-right:15px;
-    }
+  }
+}

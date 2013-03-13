@@ -28,6 +28,10 @@ class App < Sinatra::Base
     def data(hash)
       hash.keys.each_with_object({}){ |key, data_hash| data_hash["data-#{key}"] = hash[key] }
     end
+
+    def tooltip(content)
+      slim :_tooltip, locals: {content: content}
+    end
   end
 
   before do
