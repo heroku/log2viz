@@ -1,14 +1,16 @@
 @import "compass";
 @import "compass/reset";
+@import "config";
 @import "tooltips";
 @import "utilization";
+@import "errors";
 
   html,
   button,
   input,
   select,
   textarea {
-      color: #efefef;
+      color: $text_color;
   }
 
   body {

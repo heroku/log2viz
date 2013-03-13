@@ -1,0 +1,15 @@
+.error {
+  margin: 100px auto;
+  text-align: center;
+  width: 70%;
+
+  h2 {
+    padding-bottom: 10px;
+  }
+
+  p {
+    color: darken($text_color, 20%);
+    margin: auto;
+    width: 40%;
+  }
+}

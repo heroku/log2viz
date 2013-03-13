@@ -118,4 +118,12 @@ class App < Sinatra::Base
     redirect to('/auth/heroku')
   end
 
+  error 404 do
+    slim :"404"
+  end
+
+  error do
+    slim :"500"
+  end
+
 end
