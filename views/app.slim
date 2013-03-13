@@ -9,32 +9,61 @@ h1.page-title= params[:id]
   .col
     .metric*data(display:"median",type:"response_time",label:"ms")
       h2 Response Time
-      h3 Median
+      h3
+        | Median
+        span.learnmore
+          a.tooltip.linkout href="http://www.purplemath.com/modules/meanmode.htm"
+            | Learn More
+            span.response-info Median time spent in the router and the dyno combined. (Note this is a different calculation than average/mean response time.)
       h3.score
         .data 0
     .metric*data(display:"perc95",type:"response_time",label:"ms")
-      h3 95th Percentile
+      h3
+        | 95th Percentile
+        span.learnmore
+          a.tooltip href="#"
+            | Learn More
+            span.response-info The slowest 5% of responses. May be caused by long processing times (like a heavy database query) or by queueing behind other requests.
       h3.score
         .data 0
   .col
     .metric*data(display:"sum",type:"requests",label:" rpm")
-      h2 Throughput
+      h2
+        | Throughput
+        span.learnmore
+          a.tooltip href="#"
+            | Learn More
+            span.response-info Web requests processed in the last minute.
       h3.score
         .data 0
 
     .metric*data(display:"average",type:"memory_usage",units:1000000,label:"MB")
-      h2 Average Memory Usage
+      h2
+        | Average Memory Usage
+        span.learnmore
+          a.tooltip.linkout href="https://devcenter.heroku.com/articles/log-runtime-metrics"
+            | Learn More
+            span.response-info Average of memory use across all web dynos. Enable log-runtime-metrics labs flag to add memory usage to the app’s logs.
       h3.score
         span.data 0
         span  of 512MB
 
   .col
     .metric*data(display:"counter",type:"status",default:["2xx","3xx","4xx","5xx"])
-      h2 Response Status
+      h2
+        | Response Status
+        span.learnmore
+          a.tooltip href="#"
+            | Learn More
+            span.response-info Breakdown of HTTP status codes returned by the app. A high rate of 5xx (especially 500s and 503s) may indicate a problem.
       ul.data.two-col-list
     .metric*data(display:"counter",type:"error")
-      h2 Heroku Error Code
-      ul.data.two-col-list
+      h2
+        | Heroku Error Code
+        span.learnmore
+          a.tooltip.linkout href="http://www.google.com/url?q=https%3A%2F%2Fdevcenter.heroku.com%2Farticles%2Ferror-codes&sa=D&sntz=1&usg=AFQjCNHHOuzERR-HORMWJK3obxe0sLfrlA"
+            | Learn More
+            span.response-info Breakdown of Heroku error codes, such as H12 Request timeout or R10 Boot timeout. A high rate of errors may indicate a problem.
 
 .metric*data(display:"utilization",type:"response_time",label:"%",procs:@concurrency*@ps)
   h2
@@ -42,7 +71,7 @@ h1.page-title= params[:id]
     span.learnmore
       a.tooltip href="#"
         | Learn More
-        span.response-info Utilization measures how busy your dynos are. For best results, keep below 50%.
+        span.response-info Measurement of how busy your web dynos are. Formula is total time spent in web requests divided by your total concurrency. Use WEB_CONCURRENCY config var on the app to indicate how many requests your dyno can process simultaneously.
   .utilization
     h3.score.data
   p.dynos #{@concurrency * @ps} web processes (#{@ps} dynos x #{@concurrency} processes per dyno)
