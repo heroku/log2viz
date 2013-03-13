@@ -119,10 +119,12 @@ class App < Sinatra::Base
   end
 
   error 404 do
+    @title = "Page Not Found"
     slim :"404"
   end
 
   error do
+    @title = "Oops"
     slim :"500"
   end
 
