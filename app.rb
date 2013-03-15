@@ -100,35 +100,30 @@ class App < Sinatra::Base
       http.stream do |chunk|
         buffer << chunk
         while line = buffer.slice!(/.+\n/)
-          begin 
-            matches = line.force_encoding('utf-8').match(/(\S+)\s(\w+)\[(\w|.+)\]\:\s(.*)/)
+          matches = line.force_encoding('utf-8').match(/(\S+)\s(\w+)\[(\w|.+)\]\:\s(.*)/)
+          next if matches.nil? || matches.length < 5
 
-            ps   = matches[3].split('.').first
-            data = Hash[ matches[4].split(" ").map{|j| j.split("=")} ]
+          ps   = matches[3].split('.').first
+          data = Hash[ matches[4].split(" ").map{|j| j.split("=")} ]
 
-            parsed_line = {}
+          parsed_line = {}
 
-            if ps == "router"
-              parsed_line = {
-                "requests" => 1,
-                "response_time" => data["service"].to_i,
-                "status" => "#{data["status"][0]}xx"
-              }
-              parsed_line["error"] = data["code"] if data["at"] == "error"
-            elsif ps == "web" && data.fetch("measure","").include?("memory_total")
-              parsed_line = {
-                "memory_usage" => data["val"].to_i
-              }
-            end
+          if ps == "router"
+            parsed_line = {
+              "requests" => 1,
+              "response_time" => data["service"].to_i,
+              "status" => "#{data["status"][0]}xx"
+            }
+            parsed_line["error"] = data["code"] if data["at"] == "error"
+          elsif ps == "web" && data.fetch("measure","").include?("memory_total")
+            parsed_line = {
+              "memory_usage" => data["val"].to_i
+            }
+          end
 
-            unless parsed_line.empty?
-              parsed_line["timestamp"] = DateTime.parse(matches[1]).to_time.to_i
-              out << "data: #{parsed_line.to_json}\n\n"
-            end
-          rescue Exception => e
-            puts "Caught exception while parsing:"
-            puts line.inspect
-            puts e.inspect
+          unless parsed_line.empty?
+            parsed_line["timestamp"] = DateTime.parse(matches[1]).to_time.to_i
+            out << "data: #{parsed_line.to_json}\n\n"
           end
         end
       end
