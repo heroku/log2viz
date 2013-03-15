@@ -8,14 +8,26 @@ class App < Sinatra::Base
   set :raise_errors, false
   set :show_exceptions, false
 
-  use Rack::Flash
-
   configure :development do
     require "sinatra/reloader"
     register Sinatra::Reloader
   end
 
   configure do
+    use Rack::Flash
+    use Stethoscope
+
+    Stethoscope.url = "/health"
+    Stethoscope.check :api do |response|
+      url = "http://api.heroku.com/health"
+      start = Time.now
+      check = Excon.get(url)
+      response[:ping] = Time.now - start
+      response[:url] = url
+      response[:result] = check.body
+      response[:status] = check.status
+    end
+
     Compass.add_project_configuration(File.join(File.dirname(__FILE__), 'config', 'compass.config'))
   end
 

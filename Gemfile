@@ -10,3 +10,4 @@ gem 'eventmachine', "~>1.0.0.beta"
 gem 'em-http-request', '~>1.0'
 gem 'json'
 gem 'rack-flash3'
+gem "stethoscope"
