@@ -85,7 +85,6 @@ class App < Sinatra::Base
   get "/log/:id", provides: 'text/event-stream' do
     @heroku = Heroku::API.new(:api_key => request.env['bouncer.token'])
     url = @heroku.get_logs(params[:id], {'tail' => 1, 'num' => 5000}).body
-    puts url
 
     stream :keep_open do |out|
       # Keep connection open on cedar
@@ -93,11 +92,9 @@ class App < Sinatra::Base
       http = EventMachine::HttpRequest.new(url, keepalive: true, connection_timeout: 0, inactivity_timeout: 0).get
 
       out.callback do
-        puts "callback: closing"
         out.close
       end
       out.errback do
-        puts "errback: closing"
         out.close
       end
 
