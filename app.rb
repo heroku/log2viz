@@ -109,7 +109,7 @@ class App < Sinatra::Base
           next if matches.nil? || matches.length < 5
 
           ps   = matches[3].split('.').first
-          data = Hash[ matches[4].split(" ").map{|j| j.split("=")} ]
+          data = Hash[ matches[4].split(/\s+/).map{|j| j.split("=", 2)} ]
 
           parsed_line = {}
 
