@@ -1,4 +1,8 @@
 .metric[data-display='activity'].loading {
+  .activity {
+    border: 1px solid transparent;
+  }
+
   .data {
     background: none;
     padding: 0;
@@ -7,24 +11,17 @@
 }
 .activity {
   position:relative;
+  border: 1px solid rgba(70,67,104,.7);
+  padding: 5px;
+  margin-bottom: 5px;
 
   .data {
     @include box-sizing(border-box);
-    background: #37a800;
+    background: #464368;
     height: 40px;
     padding-left: 6px;
+    max-width: 100%;
+    margin: 0;
     width: 0%;
-
-    &.good {
-      background: #37a800;
-    }
-
-    &.bad {
-      background: #fea83b;
-    }
-
-    &.ugly {
-      background: #cc3333;
-    }
   }
 }
