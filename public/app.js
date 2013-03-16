@@ -98,14 +98,14 @@ function counter(items, elem) {
   })
 }
 
-function utilization(items, elem) {
+function activity(items, elem) {
   var sum = 0;
-  var utilization;
+  var activity;
   $.each(items, function() { sum += this });
 
-  value = ((sum/(WINDOW_SIZE * 1000 * $(elem).data("procs"))) * 100).toFixed(2)
+  value = ((sum/(WINDOW_SIZE * 300 * $(elem).data("procs"))) * 100).toFixed(2)
   $(".data", elem).css("width", value + "%")
-  setText(elem, value)
+  setText(elem, "")
 }
 
 function median(items, elem) {
