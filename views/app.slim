@@ -47,10 +47,10 @@ h1.page-title= params[:id]
         == tooltip "Breakdown of <a href='https://devcenter.heroku.com/articles/error-codes'>Heroku error codes</a>, such as H12 Request timeout or R10 Boot timeout. A high rate of errors may indicate a problem."
       ul.data.two-col-list
 
-.metric*data(display:"utilization",type:"response_time",label:"%",procs:@web_processes)
+.metric*data(display:"activity",type:"response_time",label:"",procs:@web_processes)
   h2
-    | Utilization
-    == tooltip "Measurement of how busy your web dynos are. Formula is total time spent in web requests divided by your total concurrency. Use <code>WEB_CONCURRENCY</code> config var on the app to indicate how many requests your dyno can process simultaneously."
-  .utilization
+    | Web Dyno Activity
+    == tooltip "Rough visualization of web dyno activity. A wider bar means more time spent processing requests."
+  .activity
     h3.score.data
   p.dynos #{@web_processes} web #{pluralize(@web_processes, "process", "processes")} (#{@ps} #{pluralize(@ps, "dyno", "dynos")} x #{@concurrency} #{pluralize(@concurrency, "process", "processes")} per dyno)
