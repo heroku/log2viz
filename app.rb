@@ -14,6 +14,8 @@ class App < Sinatra::Base
   end
 
   configure do
+    register Sinatra::RespondWith
+
     use Rack::Flash
     use Stethoscope
 
@@ -37,6 +39,40 @@ class App < Sinatra::Base
   end
 
   helpers do
+    # Heroku API
+    def api
+      halt(401) unless request.env['bouncer.token']
+      Heroku::API.new(:api_key => request.env['bouncer.token'])
+    end
+
+    def app(name)
+      api.get_app(name).body
+    rescue Heroku::API::Errors::Forbidden, Heroku::API::Errors::NotFound
+      halt(404)
+    end
+
+    def web_count(name)
+      api.get_ps(name).body.select{|x| x["process"].include?("web.")}.count
+    rescue
+      flash.now[:error] = "Process data not available."
+      1
+    end
+
+    def concurrency_count(name)
+      config = api.get_config_vars(name).body
+      (config["UNICORN_WORKERS"] || config["WEB_CONCURRENCY"] || params[:concurrency] || 1).to_i
+    rescue
+      flash.now[:error] = "Configuration data not available."
+      (params[:concurrency] || 1).to_i
+    end
+
+    def log_url(name)
+      api.get_logs(name, {'tail' => 1, 'num' => 1500}).body
+    rescue Heroku::API::Errors::Forbidden, Heroku::API::Errors::NotFound
+      halt(404)
+    end
+
+    # View helpers
     def data(hash)
       hash.keys.each_with_object({}){ |key, data_hash| data_hash["data-#{key}"] = hash[key] }
     end
@@ -57,34 +93,25 @@ class App < Sinatra::Base
   end
 
   get "/" do
-    heroku = Heroku::API.new(:api_key => request.env['bouncer.token'])
-    @apps = heroku.get_apps.body.sort{|x,y| x["name"] <=> y["name"]}
+    @apps = api.get_apps.body.sort{|x,y| x["name"] <=> y["name"]}
     slim :index
   end
 
   get '/app/:id' do
-    heroku = Heroku::API.new(:api_key => request.env['bouncer.token'])
-    @app = heroku.get_app(params[:id]).body
-    @title = params[:id]
+    name = params[:id]
 
-    begin
-      @ps = heroku.get_ps(params[:id]).body.select{|x| x["process"].include?("web.")}.count
+    @title = name
 
-      config = heroku.get_config_vars(params[:id]).body
-      @concurrency = (config["UNICORN_WORKERS"] || config["WEB_CONCURRENCY"] || params[:concurrency] || 1).to_i
-    rescue
-      @ps = 1
-      @concurrency =  (params[:concurrency] || 1).to_i
-      flash.now[:error] = "Process data not available"
-    end
+    @app = app(name)
+    @ps = web_count(name)
+    @concurrency = concurrency_count(name)
     @web_processes = @concurrency * @ps
 
     slim :app
   end
 
-  get "/log/:id", provides: 'text/event-stream' do
-    @heroku = Heroku::API.new(:api_key => request.env['bouncer.token'])
-    url = @heroku.get_logs(params[:id], {'tail' => 1, 'num' => 5000}).body
+  get "/app/:id/logs", provides: 'text/event-stream' do
+    url = log_url(params[:id])
 
     stream :keep_open do |out|
       # Keep connection open on cedar
@@ -139,7 +166,10 @@ class App < Sinatra::Base
 
   error 404 do
     @title = "Page Not Found"
-    slim :"404"
+    respond_to do |f|
+      f.html { slim :"404" }
+      f.on("*/*") { "404 App not found" }
+    end
   end
 
   error do

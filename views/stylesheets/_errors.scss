@@ -1,4 +1,13 @@
-.error {
+.flash {
+  padding: 10px;
+  margin-bottom: 10px;
+
+  &.error {
+    background: #cc3333;
+  }
+}
+
+.error-page {
   margin: 100px auto;
   text-align: center;
   width: 70%;

@@ -11,7 +11,7 @@ $(function() {
 });
 
 function streamLogs(app, elem) {
-  var source = new EventSource('/log/' + app);
+  var source = new EventSource('/app/' + app + "/logs");
   var update = setInterval(function() { updateValues(); }, 1000);
 
   source.addEventListener('message', function(e) {
