@@ -44,6 +44,10 @@ class App < Sinatra::Base
     def tooltip(content)
       slim :_tooltip, locals: {content: content}
     end
+
+    def pluralize(count, singular, plural)
+      count == 1 ? singular : plural
+    end
   end
 
   before do
@@ -73,6 +77,7 @@ class App < Sinatra::Base
       @concurrency =  (params[:concurrency] || 1).to_i
       flash.now[:error] = "Process data not available"
     end
+    @web_processes = @concurrency * @ps
 
     slim :app
   end
