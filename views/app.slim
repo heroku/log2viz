@@ -46,12 +46,12 @@ h1.page-title= params[:id]
       h2
         | Response Status
         == tooltip "Breakdown of HTTP status codes returned by the app. A high rate of 5xx (especially 500s and 503s) may indicate a problem."
-      ul.data.two-col-list
+      ul.data.column-list
     .metric*data(display:"counter",type:"error")
       h2
         | Heroku Error Code
         == tooltip "Breakdown of <a href='https://devcenter.heroku.com/articles/error-codes'>Heroku error codes</a>, such as H12 Request timeout or R10 Boot timeout. A high rate of errors may indicate a problem."
-      ul.data.two-col-list
+      ul.data.column-list
 
 .metric*data(display:"activity",type:"response_time",label:"",procs:@web_processes)
   h2
