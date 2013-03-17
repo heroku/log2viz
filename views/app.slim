@@ -7,6 +7,13 @@ h1.page-title= params[:id]
 
 #metrics
   .col
+    .metric*data(display:"sum",type:"requests",label:" rpm")
+      h2
+        | Throughput
+        == tooltip "Web requests processed in the last minute."
+      h3.value
+        .data 0
+
     h2 Response Time
     .metric*data(display:"median",type:"response_time",label:"ms")
       h3
@@ -21,17 +28,16 @@ h1.page-title= params[:id]
       h3.value
         .data 0
   .col
-    .metric*data(display:"sum",type:"requests",label:" rpm")
-      h2
-        | Throughput
-        == tooltip "Web requests processed in the last minute."
-      h3.value
-        .data 0
+    h2 
+      | Memory Usage
+      == tooltip "Memory use across all web dynos. Enable <a href='https://devcenter.heroku.com/articles/log-runtime-metrics'><code>log-runtime-metrics</code> labs flag</a> to add memory usage to the app’s logs."
 
     .metric*data(display:"average",type:"memory_usage",units:1,label:"MB of 512MB")
-      h2
-        | Average Memory Usage
-        == tooltip "Average of memory use across all web dynos. Enable <a href='https://devcenter.heroku.com/articles/log-runtime-metrics'><code>log-runtime-metrics</code> labs flag</a> to add memory usage to the app’s logs."
+      h3 Average
+      h3.value
+        span.data 0
+    .metric*data(display:"max",type:"memory_usage",units:1,label:"MB of 512MB")
+      h3 Maximum
       h3.value
         span.data 0
 

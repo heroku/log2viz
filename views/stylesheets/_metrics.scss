@@ -1,5 +1,5 @@
 #metrics {
-  @include clearfix;
+  @include pie-clearfix;
 
   .col {
     float: left;
@@ -45,7 +45,7 @@
       width: 0%;
     }
   }
-  
+
   &.loading {
     .activity {
       border: 1px solid transparent;

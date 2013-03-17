@@ -116,9 +116,14 @@ function perc95(items, elem) {
   setText(elem, percentile_index(items, 95));
 }
 
+function max(items, elem) {
+  setText(elem, percentile_index(items, 100));
+}
+
 function percentile_index(items, percentile) {
   percentile = percentile/100
   items.sort(function(a,b) { return a - b })
+  console.log(items)
   return items[Math.ceil((Math.max(items.length - 1,0)) * percentile)]
 }
 
