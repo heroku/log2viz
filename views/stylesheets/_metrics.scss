@@ -1,0 +1,61 @@
+#metrics {
+  @include clearfix;
+
+  .col {
+    float: left;
+    width: 30%;
+    margin-right: 4%;
+
+    &:last-child {
+      margin: 0;
+    }
+  }
+}
+
+.metric {
+  margin-bottom: 20px;
+
+  .value {
+    font-size: 26px;
+    margin: 5px 0;
+  }
+
+  &.loading {
+    .data {
+      opacity: .3;
+    }
+  }
+}
+
+// Activity bar
+.metric[data-display='activity'] {
+  .activity {
+    position: relative;
+    border: 1px solid rgba(70,67,104,.7);
+    padding: 5px;
+    margin-bottom: 5px;
+
+    .data {
+      @include box-sizing(border-box);
+      background: #464368;
+      height: 40px;
+      padding-left: 6px;
+      max-width: 100%;
+      margin: 0;
+      width: 0%;
+    }
+  }
+  
+  &.loading {
+    .activity {
+      border: 1px solid transparent;
+      padding: 5px 0;
+    }
+
+    .data {
+      background: none;
+      padding: 0;
+      width: 100%;
+    }
+  }
+}

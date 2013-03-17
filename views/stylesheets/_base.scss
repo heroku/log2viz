@@ -1,0 +1,56 @@
+html,
+button,
+input,
+select,
+textarea {
+  color: $text_color;
+}
+
+body {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+  font-size: 1em;
+  line-height: 1.4;
+  background-color: $background_color;
+}
+
+h1 {
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1;
+  margin-bottom: 15px;
+}
+
+h2 {
+  font-weight: 300;
+  border-bottom: 1px solid rgba(70,67,104,.7);
+  font-size: 20px;
+  padding-bottom: 3px;
+  margin: 0 0 10px 0;
+}
+
+h4 {
+  @include inline-block;
+  font-weight: bold;
+  font-size: 20px;
+  padding-right: 10px;
+}
+
+h5 {
+  @include inline-block;
+  margin: 2px 0;
+  font-weight: normal;
+}
+
+a {
+  color: $link_color;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+code {
+  font-family: monospace;
+}

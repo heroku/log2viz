@@ -5,34 +5,34 @@ javascript:
 
 h1.page-title= params[:id]
 
-.three-col.clearfix
+#metrics
   .col
     h2 Response Time
     .metric*data(display:"median",type:"response_time",label:"ms")
       h3
         | Median
         == tooltip "Median time spent in the router and the dyno combined. <a href='http://www.purplemath.com/modules/meanmode.htm'>(Note this is a different calculation than average/mean response time.)</a>"
-      h3.score
+      h3.value
         .data 0
     .metric*data(display:"perc95",type:"response_time",label:"ms")
       h3
         | 95th Percentile
         == tooltip "The slowest 5% of responses. May be caused by long processing times (like a heavy database query) or by queueing behind other requests."
-      h3.score
+      h3.value
         .data 0
   .col
     .metric*data(display:"sum",type:"requests",label:" rpm")
       h2
         | Throughput
         == tooltip "Web requests processed in the last minute."
-      h3.score
+      h3.value
         .data 0
 
     .metric*data(display:"average",type:"memory_usage",units:1,label:"MB of 512MB")
       h2
         | Average Memory Usage
         == tooltip "Average of memory use across all web dynos. Enable <a href='https://devcenter.heroku.com/articles/log-runtime-metrics'><code>log-runtime-metrics</code> labs flag</a> to add memory usage to the app’s logs."
-      h3.score
+      h3.value
         span.data 0
 
   .col
@@ -52,5 +52,5 @@ h1.page-title= params[:id]
     | Web Dyno Activity
     == tooltip "Rough visualization of web dyno activity. A wider bar means more time spent processing requests."
   .activity
-    h3.score.data
+    h3.value.data
   p.dynos #{@web_processes} web #{pluralize(@web_processes, "process", "processes")} (#{@ps} #{pluralize(@ps, "dyno", "dynos")} x #{@concurrency} #{pluralize(@concurrency, "process", "processes")} per dyno)

@@ -1,5 +1,5 @@
 h1.page-title Apps
-ul.two-col-list
+ul.column-list
   - @apps.each do |app|
     li
       a href="/app/#{app["name"]}" = app["name"]

@@ -1,0 +1,36 @@
+#wrapper {
+  width: $site_width;
+  margin: 0 auto 20px;
+}
+
+header {
+  @include clearfix;
+
+  position: relative;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(70,67,104,.7);
+  margin-bottom: 15px;
+
+  #title {
+    float: left;
+  }
+  
+  #nav {
+    float: right;
+    list-style: none;
+    margin: 2px 0;
+
+    li {
+      display: inline;
+      padding: 10px;
+    }
+  }
+}
+
+.column-list {
+  @include column-count(2);
+  @include column-gap(10px);
+  width: 70%;
+  list-style-position: inside;
+  list-style-type: square;
+}
