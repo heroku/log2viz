@@ -123,7 +123,6 @@ function max(items, elem) {
 function percentile_index(items, percentile) {
   percentile = percentile/100
   items.sort(function(a,b) { return a - b })
-  console.log(items)
   return items[Math.ceil((Math.max(items.length - 1,0)) * percentile)]
 }
 
