@@ -105,3 +105,7 @@ git push heroku master
 ```
 
 Visit your app at https://myviz.herokuapp.com
+
+## Meta
+
+Released under the [MIT license](http://www.opensource.org/licenses/mit-license.php).
