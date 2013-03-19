@@ -16,19 +16,19 @@ Realtime analysis of your Heroku app logs.
 
 Clone the repository and install the required gems.
 
-```
-git clone git@github.com:heroku/log2viz.git
-cd log2viz
-bundle install
-cp .env.sample .env
+```bash
+$ git clone git@github.com:heroku/log2viz.git
+$ cd log2viz
+$ bundle install
+$ cp .env.sample .env
 ```
 
 ### Set up OAuth
 
 `log2viz` uses OAuth to fetch your application’s logs. You can create a new OAuth client via the Heroku API:
 
-```
-curl -i -n -X POST \
+```bash
+$ curl -i -n -X POST \
 -d "client[name]=myviz&client[redirect_uri]=http://localhost:5000/auth/heroku/callback" \
 https://api.heroku.com/oauth/clients
 
@@ -46,8 +46,8 @@ HTTP/1.1 201 Created
 
 As well as view your existing clients:
 
-```
-curl -i -n -X GET https://api.heroku.com/oauth/clients
+```bash
+$ curl -i -n -X GET https://api.heroku.com/oauth/clients
 
 HTTP/1.1 200 OK
 
@@ -70,8 +70,8 @@ In your application’s `.env`, set the `HEROKU_ID` and `HEROKU_SECRET` variable
 
 ### Start the server
 
-```
-foreman start
+```bash
+$ foreman start
 ```
 
 And you’re done! Your app will be running at http://localhost:5000
@@ -80,28 +80,28 @@ And you’re done! Your app will be running at http://localhost:5000
 
 ### Create an application
 
-```
-heroku create -a myviz
+```bash
+$ heroku create -a myviz
 ```
 
 ### Create a new OAuth client
 
-```
-curl -i -n -X POST \
+```bash
+$ curl -i -n -X POST \
 -d "client[name]=myviz-production&client[[redirect_uri]=https://myviz.herokuapp.com/auth/heroku/callback” \
 https://api.heroku.com/oauth/clients
 ```
 
 And set the appropriate variables on your Heroku app:
 
-```
-heroku config:set HEROKU_ID=xxxxxxxx HEROKU_SECRET=xxxxxx HEROKU_AUTH_URL=https://id.heroku.com
+```bash
+$ heroku config:set HEROKU_ID=xxxxxxxx HEROKU_SECRET=xxxxxx HEROKU_AUTH_URL=https://id.heroku.com
 ```
 
 ### Deploy
 
-```
-git push heroku master
+```bash
+$ git push heroku master
 ```
 
 Visit your app at https://myviz.herokuapp.com
