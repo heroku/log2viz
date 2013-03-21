@@ -134,7 +134,9 @@ class App < Sinatra::Base
             next if matches.nil? || matches.length < 5
 
             ps   = matches[3].split('.').first
-            data = Hash[ matches[4].split(/\s+/).map{|j| j.split("=", 2)} ]
+            key_value_pairs = matches[4].split(/\s+/).map{|j| j.split("=", 2)}
+            next unless key_value_pairs.all?{ |pair| pair.size == 2}
+            data = Hash[ key_value_pairs ]
 
             parsed_line = {}
 
