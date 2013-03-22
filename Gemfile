@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '1.9.3'
+
 gem 'heroku-bouncer'
 gem 'sinatra-contrib'
 gem 'thin'
