@@ -4,6 +4,8 @@ require 'rack-flash'
 
 STDOUT.sync = true
 
+require_relative 'heroku/api'
+
 class App < Sinatra::Base
   set :raise_errors, false
   set :show_exceptions, false
@@ -66,6 +68,14 @@ class App < Sinatra::Base
       (params[:concurrency] || 1).to_i
     end
 
+    def web_size(name)
+      formation = api.get_formation(name).body
+      web = formation.select{|f| f["type"] == "web" }.first || {}
+      size = web.fetch("size", 1)
+    rescue Heroku::API::Errors::Forbidden, Heroku::API::Errors::NotFound
+      halt(404)
+    end
+
     def log_url(name)
       api.get_logs(name, {'tail' => 1, 'num' => 1500}).body
     rescue Heroku::API::Errors::Forbidden, Heroku::API::Errors::NotFound
@@ -84,7 +94,33 @@ class App < Sinatra::Base
     def pluralize(count, singular, plural)
       count == 1 ? singular : plural
     end
+
+    def number_to_human_size(number, precision = 2)
+      number = begin
+        Float(number)
+      rescue ArgumentError, TypeError
+        return number
+      end
+      case
+        when number.to_i == 1 then
+          "1 Byte"
+        when number < 1024 then
+          "%d Bytes" % number
+        when number < 1048576 then
+          "%.#{precision}f KB"  % (number / 1024)
+        when number < 1073741824 then
+          "%.#{precision}f MB"  % (number / 1048576)
+        when number < 1099511627776 then
+          "%.#{precision}f GB"  % (number / 1073741824)
+        else
+          "%.#{precision}f TB"  % (number / 1099511627776)
+      end.sub(/([0-9]\.\d*?)0+ /, '\1 ' ).sub(/\. /,' ')
+    rescue
+      nil
+    end
   end
+
+  BASE_DYNO_MEMORY = 536870912
 
   before do
     if request.env['bouncer.user']
@@ -104,6 +140,7 @@ class App < Sinatra::Base
 
     @app = app(name)
     @ps = web_count(name)
+    @web_memory = number_to_human_size(web_size(name) * BASE_DYNO_MEMORY)
     @concurrency = concurrency_count(name)
     @web_processes = @concurrency * @ps
 
