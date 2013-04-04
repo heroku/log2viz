@@ -35,11 +35,11 @@ https://api.heroku.com/oauth/clients
 HTTP/1.1 201 Created
 
 {
-  "id":"3f1057xxxxxxxxxxxxxxx”,
+  "id":"3f1057xxxxxxxxxxxxxxx",
   "name":"myviz",
   "description":null,
-  "redirect_uri":"http://localhost:5000/auth/heroku/callback”,
-  "secret":"ac6f8a482c91b0540d8xxxxxxxxxxxxxxxxxxx”,
+  "redirect_uri":"http://localhost:5000/auth/heroku/callback",
+  "secret":"ac6f8a482c91b0540d8xxxxxxxxxxxxxxxxxxx",
   "trusted":false
 }
 ```
@@ -53,11 +53,11 @@ HTTP/1.1 200 OK
 
 [
   {
-    "id":"3f1057xxxxxxxxxxxxxxx”,
+    "id":"3f1057xxxxxxxxxxxxxxx",
     "name":"myviz",
     "description":null,
-    "redirect_uri":"http://localhost:5000/auth/heroku/callback”,
-    "secret":"ac6f8a482c91b0540d8xxxxxxxxxxxxxxxxxxx”,
+    "redirect_uri":"http://localhost:5000/auth/heroku/callback",
+    "secret":"ac6f8a482c91b0540d8xxxxxxxxxxxxxxxxxxx",
     "trusted":false
   },
   {
@@ -88,7 +88,7 @@ $ heroku create -a myviz
 
 ```bash
 $ curl -i -n -X POST \
--d "client[name]=myviz-production&client[[redirect_uri]=https://myviz.herokuapp.com/auth/heroku/callback” \
+-d "client[name]=myviz-production&client[[redirect_uri]=https://myviz.herokuapp.com/auth/heroku/callback" \
 https://api.heroku.com/oauth/clients
 ```
 
