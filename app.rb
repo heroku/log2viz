@@ -171,7 +171,7 @@ class App < Sinatra::Base
             next if matches.nil? || matches.length < 5
 
             ps   = matches[3].split('.').first
-            key_value_pairs = matches[4].split(/([a-z]+=(?:\"[^\"]*\"|\S+))\s?/)
+            key_value_pairs = matches[4].split(/(\S+=(?:\"[^\"]*\"|\S+))\s?/)
                                         .select{|j| !j.empty? }
                                         .map{|j| j.split("=", 2)}
 
