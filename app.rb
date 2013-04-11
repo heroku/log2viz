@@ -171,10 +171,13 @@ class App < Sinatra::Base
             next if matches.nil? || matches.length < 5
 
             ps   = matches[3].split('.').first
-            key_value_pairs = matches[4].split(/\s+/).map{|j| j.split("=", 2)}
-            next unless key_value_pairs.all?{ |pair| pair.size == 2}
-            data = Hash[ key_value_pairs ]
+            key_value_pairs = matches[4].split(/([a-z]+=(?:\"[^\"]*\"|\S+))\s?/)
+                                        .select{|j| !j.empty? }
+                                        .map{|j| j.split("=", 2)}
 
+            next unless key_value_pairs.all?{ |pair| pair.size == 2}
+
+            data = Hash[ key_value_pairs ]
             parsed_line = {}
 
             if ps == "router"
