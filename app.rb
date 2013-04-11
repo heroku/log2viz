@@ -186,7 +186,7 @@ class App < Sinatra::Base
                 "response_time" => data["service"].to_i,
                 "status" => "#{data["status"][0]}xx"
               }
-              parsed_line["error"] = data["code"] if data["at"] == "error"
+              parsed_line["error"] = data["code"] if data["code"]
             elsif ps == "web" && data.fetch("measure","").include?("memory_total")
               parsed_line = {
                 "memory_usage" => data["val"].to_i
