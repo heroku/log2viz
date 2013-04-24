@@ -1,4 +1,13 @@
 GIT
+  remote: git://github.com/raulb/stethoscope.git
+  revision: 1b7edef7b23ae080bacf4404831769a18203d602
+  specs:
+    stethoscope (0.2.3)
+      dictionary (>= 1.0)
+      rack (> 1.0)
+      tilt (>= 1.0)
+
+GIT
   remote: https://github.com/tmm1/http_parser.rb.git
   revision: 8595cac0e255c6f94b261144e464d1f7c4a2e594
   branch: latest-upstream
@@ -81,10 +90,6 @@ GEM
     slim (1.3.6)
       temple (~> 0.5.5)
       tilt (~> 1.3.3)
-    stethoscope (0.2.3)
-      dictionary (>= 1.0)
-      rack (> 1.0)
-      tilt (>= 1.0)
     temple (0.5.5)
     thin (1.5.0)
       daemons (>= 1.0.9)
@@ -105,5 +110,5 @@ DEPENDENCIES
   rack-flash3
   sinatra-contrib
   slim
-  stethoscope
+  stethoscope!
   thin
