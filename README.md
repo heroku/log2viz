@@ -1,13 +1,3 @@
----
-
-# IMPORTANT NOTE: 
-
-### Creating new OAuth clients on Heroku is currently disabled. If you want to spin up your own instance of log2viz, please contact me directly at dominic@heroku.com 
-
-You can track progress on this issue here: https://github.com/heroku/log2viz/issues/36
-
----
-
 # log2viz
 
 http://log2viz.herokuapp.com/
