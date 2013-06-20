@@ -53,8 +53,7 @@ And set the appropriate variables on your Heroku app:
 
 ```bash
 $ heroku config:set HEROKU_ID=xxxxxxxx \
-	HEROKU_SECRET=xxxxxx \
-	HEROKU_AUTH_URL=https://id.heroku.com
+	HEROKU_SECRET=xxxxxx 
 ```
 
 ### Deploy
