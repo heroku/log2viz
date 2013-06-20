@@ -25,48 +25,9 @@ $ cp .env.sample .env
 
 ### Set up OAuth
 
-`log2viz` uses OAuth to fetch your application’s logs. You can create a new OAuth client via the Heroku API:
+`log2viz` uses OAuth to obtain authorization to fetch your application’s logs using the Heroku API. To make this work, you have to register an OAuth client with Heroku. The easiest way to do this is on your [account page on the Heroku Dashboard](https://dashboard.heroku.com/account). Enter `http://localhost:5000/auth/heroku/callback` when prompted for a callback URL. The [OAuth developer doc](devcenter.heroku.com/articles/oauth?preview=1) has additional details on client creation and OAuth in general.
 
-```bash
-$ curl -i -n -X POST \
--d "client[name]=myviz&client[redirect_uri]=http://localhost:5000/auth/heroku/callback" \
-https://api.heroku.com/oauth/clients
-
-HTTP/1.1 201 Created
-
-{
-  "id":"3f1057xxxxxxxxxxxxxxx",
-  "name":"myviz",
-  "description":null,
-  "redirect_uri":"http://localhost:5000/auth/heroku/callback",
-  "secret":"ac6f8a482c91b0540d8xxxxxxxxxxxxxxxxxxx",
-  "trusted":false
-}
-```
-
-As well as view your existing clients:
-
-```bash
-$ curl -i -n -X GET https://api.heroku.com/oauth/clients
-
-HTTP/1.1 200 OK
-
-[
-  {
-    "id":"3f1057xxxxxxxxxxxxxxx",
-    "name":"myviz",
-    "description":null,
-    "redirect_uri":"http://localhost:5000/auth/heroku/callback",
-    "secret":"ac6f8a482c91b0540d8xxxxxxxxxxxxxxxxxxx",
-    "trusted":false
-  },
-  {
-    ...
-  }
-]
-```
-
-In your application’s `.env`, set the `HEROKU_ID` and `HEROKU_SECRET` variables to those returned by the API.
+When registering the client you get an OAuth client id and secret. Add these as `HEROKU_ID` and `HEROKU_SECRET` environment variables to your application’s `.env`.
 
 ### Start the server
 
@@ -86,16 +47,13 @@ $ heroku create -a myviz
 
 ### Create a new OAuth client
 
-```bash
-$ curl -i -n -X POST \
--d "client[name]=myviz-production&client[[redirect_uri]=https://myviz.herokuapp.com/auth/heroku/callback" \
-https://api.heroku.com/oauth/clients
-```
+Register a new OAuth client as described above, this time using the URL of your publicly running app for the callback, i.e. `https://myviz.herokuapp.com/auth/heroku/callback`.
 
 And set the appropriate variables on your Heroku app:
 
 ```bash
-$ heroku config:set HEROKU_ID=xxxxxxxx HEROKU_SECRET=xxxxxx HEROKU_AUTH_URL=https://id.heroku.com
+$ heroku config:set HEROKU_ID=xxxxxxxx \
+	HEROKU_SECRET=xxxxxx 
 ```
 
 ### Deploy
