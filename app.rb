@@ -187,9 +187,9 @@ class App < Sinatra::Base
                 "status" => "#{data["status"][0]}xx"
               }
               parsed_line["error"] = data["code"] if data["code"]
-            elsif ps == "web" && data.key?("measure.memory_total")
+            elsif ps == "web" && data.key?("sample#memory_total")
               parsed_line = {
-                "memory_usage" => data["measure.memory_total"].to_i
+                "memory_usage" => data["sample#memory_total"].to_i
               }
             end
 
