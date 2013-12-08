@@ -72,6 +72,7 @@ class App < Sinatra::Base
       formation = api.get_formation(name).body
       web = formation.select{|f| f["type"] == "web" }.first || {}
       size = web.fetch("size", 1)
+      size.to_i
     rescue Heroku::API::Errors::Forbidden, Heroku::API::Errors::NotFound
       halt(404)
     end
