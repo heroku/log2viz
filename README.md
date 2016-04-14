@@ -1,4 +1,6 @@
-# log2viz
+# DEFUNCT: log2viz
+
+This project and the `log2viz.herokuapp.com` service are no longer actively maintained by Heroku.
 
 http://log2viz.herokuapp.com/
 
