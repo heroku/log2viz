@@ -60,3 +60,10 @@ h1.page-title= params[:id]
   .activity
     h3.value.data
   p.dynos #{@web_processes} web #{pluralize(@web_processes, "process", "processes")} (#{@ps} #{pluralize(@ps, "dyno", "dynos")} x #{@concurrency} #{pluralize(@concurrency, "process", "processes")} per dyno)
+
+.metric*data(display:"table",type:"request",label:"")
+  h2
+    | Requests
+    == tooltip "A list of requests in the last minute"
+  .activity
+    h3.value.data

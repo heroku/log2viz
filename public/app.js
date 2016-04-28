@@ -65,6 +65,10 @@ function updateValues() {
 // Measurements
 ///////////////////////////////////////////
 
+function table(items, elem) {
+  setTable(elem, items)
+}
+
 function sum(items, elem) {
   var value = items.length;
   setText(elem, value);
@@ -132,6 +136,21 @@ function percentile_index(items, percentile) {
 
 function showDefault(elem) {
   $(".data", elem).empty().text("No data")
+}
+
+function setTable(elem, value) {
+  $(".data", elem).empty()
+  var html = "<table class='request_table'>"
+  for (var i = 0, len = value.length; i < len; ++i) {
+      html += '<tr>';
+      for (var j = 0, rowLen = value[i].length; j < rowLen; ++j ) {
+          html += '<td>' + value[i][j] + '</td>';
+      }
+      html += "</tr>";
+  }
+  html += '</table>';
+
+  $(html).appendTo($(".data", elem));
 }
 
 function setText(elem, value) {

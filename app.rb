@@ -9,6 +9,7 @@ require_relative 'heroku/api'
 class App < Sinatra::Base
   set :raise_errors, false
   set :show_exceptions, false
+  set :logging, true
 
   configure :development do
     require "sinatra/reloader"
@@ -178,14 +179,17 @@ class App < Sinatra::Base
 
             next unless key_value_pairs.all?{ |pair| pair.size == 2}
 
+
             data = Hash[ key_value_pairs ]
+            # logger.info "#{data['dyno']}: #{data['path']} #{data['service']}" unless data['path'].nil?
             parsed_line = {}
 
             if ps == "router"
               parsed_line = {
-                "requests" => 1,
-                "response_time" => data["service"].to_i,
-                "status" => "#{data["status"][0]}xx"
+                "requests"        => 1,
+                "response_time"   => data["service"].to_i,
+                "status"          => "#{data["status"][0]}xx",
+                "request"         => [data['dyno'], data['path'], data['service']]
               }
               parsed_line["error"] = data["code"] if data["code"]
             elsif ps == "web" && data.key?("sample#memory_total")
