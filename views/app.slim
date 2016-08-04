@@ -59,4 +59,6 @@ h1.page-title= params[:id]
     == tooltip "Rough visualization of web dyno activity. A wider bar means more time spent processing requests."
   .activity
     h3.value.data
-  p.dynos #{@web_processes} web #{pluralize(@web_processes, "process", "processes")} (#{@ps} #{pluralize(@ps, "dyno", "dynos")} x #{@concurrency} #{pluralize(@concurrency, "process", "processes")} per dyno)
+  p.dynos 
+    #{@web_processes} web #{pluralize(@web_processes, "process", "processes")} (#{@ps} #{pluralize(@ps, "dyno", "dynos")} x #{@concurrency} #{pluralize(@concurrency, "process", "processes")} per dyno)
+    == tooltip "Processes per dyno is determined by the WEB_CONCURRENCY environment variable"
