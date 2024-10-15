@@ -17,7 +17,8 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.3.3)
+    addressable (2.8.0)
+      public_suffix (>= 2.0.2, < 5.0)
     backports (3.1.1)
     chunky_png (1.2.7)
     compass (0.12.2)
@@ -44,7 +45,7 @@ GEM
     heroku-api (0.3.8)
       excon (~> 0.16.10)
     heroku-bouncer (0.0.1)
-      heroku-api (>= 0.0.0)
+      heroku-api
       omniauth-heroku (>= 0.1.0)
       sinatra (~> 1.0)
     httpauth (0.2.0)
@@ -68,6 +69,7 @@ GEM
     omniauth-oauth2 (1.1.1)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
+    public_suffix (2.0.5)
     rack (1.5.2)
     rack-flash3 (1.0.3)
       rack
